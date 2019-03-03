@@ -1,0 +1,215 @@
+* {
+    box-sizing: border-box;
+}
+
+button {
+    cursor: pointer;
+}
+
+body {
+    background-color: rgb(221, 221, 221);
+    margin: 0;
+    padding-top: 0.1px;
+    font-size: 18px;
+    font-family: sans-serif;
+}
+
+.page-container {
+    max-width: 700px;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+}
+
+.login-box {
+    background-color: rgb(163, 163, 163);
+    text-align: center;
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto 0 auto;
+}
+
+.login-field {
+    font-size: 20px;
+    border: none;
+    margin: 3px;
+}
+
+.login-button {
+    font-size: 20px;
+    border: none;
+    border-radius: 30px;
+    padding: 4px 30px;
+    margin-top: 5px;
+}
+
+.new-user-link {
+    text-align: center;
+}
+
+/* ABOVE: LANDING PAGE  */
+/* BELOW: USER PROFILE PAGE */
+
+.nav {
+    background-color: #5a5a5a;
+    width: 100%;
+    display: block;
+    text-align: left;
+    padding: 0px;
+    position: fixed;
+    z-index: 10;
+}
+
+.nav-title {
+    font-size: 30px;
+    position: absolute;
+    display: inline-block;
+    color: white;
+    margin: 0px;
+    right: 15px;
+    top: 12px;
+}
+
+.nav-characters-button {
+    border: none;
+    font-size: 20px;
+    border-radius: 50px;
+    padding: 8px 20px;
+    background-color: bisque;
+    margin: 10px 15px;
+}
+
+.build-page-header {
+    padding-top: 50px;
+}
+
+.button-container {
+    margin: 5px auto;
+    max-width: 500px;
+    position: relative;
+}
+
+.save-button {
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    padding: 5px 40px;
+    background-color: white;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.randomize-button {
+    border: none;
+    border-radius: 50px;
+    padding: 5px 20px;
+    font-size: 16px;
+    background-color: white;
+}
+
+.build-box {
+    max-width: 500px;
+    padding: 20px 30px 10px 30px;
+    background-color: rgb(202, 202, 202);
+    border-radius: 20px;
+    margin: 0 auto 0 auto;
+}
+
+.build-box-header {
+    text-align: center;
+    font-size: 22px;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.build-paragraph {
+    font-size: 22px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.build-input {
+    font-size: 16px;
+    background-color: #cacaca;
+    border: none;
+    border-bottom: 1px solid;
+    text-align: center;
+    width: 69%;
+}
+
+.stats {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    text-align: center;
+    display: inline-block;
+    width: 32%;
+}
+
+.stat-input {
+    width: 60%;
+    font-size: 18px;
+    text-align: center;
+}
+
+.input-name {
+    margin-bottom: 15px;
+}
+
+.input-race {
+    
+}
+
+.input-class {
+    
+}
+
+.input-accent {
+    
+}
+
+.input-quirk {
+    
+}
+
+.character-background-box {
+    width: 100%;
+    height: 130px;
+    overflow-y: auto;
+    font-size: 16px;
+}
+
+/* ABOVE: BUILD PAGE
+BELOW: PROFILE PAGE */
+
+.character-list {
+    background-color: rgb(138, 138, 138);
+    text-align: center;
+}
+
+.character-list-item {
+    text-align: center;
+    background-color: #e6e6e6;
+    margin: 3px 1px;
+    padding: 5px;
+    width: 47.9%;
+    border-radius: 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.new-character-button {
+    font-size: 20px;
+    background-color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 5px 40px;
+    margin: 10px;
+}
