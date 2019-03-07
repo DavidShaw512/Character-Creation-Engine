@@ -73,7 +73,7 @@ header {
     top: 12px;
 }
 
-.nav-characters-button {
+.nav-drawer-button {
     border: none;
     font-size: 20px;
     border-radius: 50px;
@@ -127,12 +127,12 @@ header {
 }
 
 .build-paragraph {
-    font-size: 22px;
+    font-size: 20px;
     margin-bottom: 5px;
     margin-top: 5px;
 }
 
-.build-input {
+.text-input {
     font-size: 16px;
     background-color: #cacaca;
     border: none;
@@ -150,7 +150,8 @@ header {
 .stat {
     text-align: center;
     display: inline-block;
-    width: 32%;
+    width: 31%;
+    margin-top: 10px;
 }
 
 .stat-input {
@@ -161,6 +162,8 @@ header {
 
 .input-name {
     margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .input-race {
@@ -187,22 +190,56 @@ header {
 }
 
 /* ABOVE: BUILD PAGE
-BELOW: PROFILE PAGE */
+BELOW: NAV DRAWER */
+
+.nav-drawer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 250px;
+    height: 100%;
+    padding: 15px;
+    overflow-x: hidden;
+    background-color: rgba(250, 235, 215, 0.959);
+    box-shadow: 2px 2px 5px;
+    transition: 0.3s;
+
+
+}
+
+.drawer-close-button {
+    border: none;
+    position: absolute;
+    right: 5px;
+    top: -5px;
+    font-size: 20px;
+    border-radius: 50px;
+    padding: 8px 13px;
+    background-color: rgb(255, 113, 113);
+    margin: 10px 0px;
+}
 
 .character-list {
     background-color: rgb(138, 138, 138);
     text-align: center;
+    padding-left: 0px;
 }
 
 .character-list-item {
-    text-align: center;
+    text-align: left;
     background-color: #e6e6e6;
-    margin: 3px 1px;
-    padding: 5px;
-    width: 47.9%;
+    margin: 5px 1px;
+    padding: 8px;
+    width: 90%;
     border-radius: 10px;
+    border: 3px solid slateblue;
     display: inline-block;
     cursor: pointer;
+}
+
+.character-list-item:hover {
+    border: 3px solid skyblue;
 }
 
 .new-character-button {
