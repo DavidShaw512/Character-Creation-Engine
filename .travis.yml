@@ -1,2 +1,10 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: skkgvIhMPWcJTOmOUyBMw84rqIvpF6RjooXED0YXRbiUsZwPppb5hYVHj0yuWuxD8+9dJ0c07wt5fJwIIfL2alcoL2UdxeSkaA5Y7qH6aiKZStXJB6TU1efpMa5A9Y+3mBtz68IS8pIu9qdV6kLbQCV3xWAZmfvC9H7F9z2ra0WgzAIz3vsvkxELgq5Tf4XU1lXZ58xFO3Y7M7FIsICDNLJhp6IGuO2/vzSgmB15L2G/2RbbloYcLNUe9p3TEM4EZo69SuMAQ6pO3Y3VJWYLIBidS0JJVH02ogKr++wpHY1spr6/k1yIVypZFXmWvn/oX+fB6/Zb4tK+Z9TKDAxSADB0NyLc1cWrKxFLbu6orHUK4+FF+jq1Z1fpxtPe2mHOJ3d4/Gpn0kLh5S0eiRzNeq5AONv02LZHNAviw/tZtLqG3MdFlRzk9tEi/E+0U0k9rZden3qkMGo7cObWf6IAs0aFR1BjQFPiaZl+Jy/mFBbUqpt8ZbAjnDIWrhCMltlYodqCcKOfEhIZ1PeaSQvbyD4KsOEtcaFyHfZA/akjkX3sDy2oALH6QIVO4poTzoAVLwm0PDDswHGhIEtASHjDmpJA9C0lezmtjgunwkWHMb7b8XsYzexadVGwBy1QEvocnsJTpmTQAWfx6bh6W0G/gGLSjJH6r6Nci0RuhmfP914=
+  app: obscure-woodland-38845
+  on:
+    repo: DavidShaw512/Capstone-dnd-character-randomizer
+    branch: DevBranch
