@@ -8,18 +8,18 @@ const navDrawerModule = (function() {
 
     let _render = false;
 
-    function _getUser() {
-        return apiModule.getUser();
-    }
-
-    function _generateUser(state) {
-        return `${state.currentUser.email}`
-    }
+    // function _getUser() {
+    //     return apiModule.getUser();
+    // }
 
     // This function grabs a character from the (already populated) store/state
-    function _getCharacter(state) {
-        apiModule.getCharacter();
-    }
+    // function _getCharacter(state) {
+    //     $(".character-list-item").click(function(event) {
+    //         event.preventDefault();
+    //         return apiModule.getCharacter(state);
+    //     })
+        
+    // }
 
     function _getCharacters() {
         
@@ -27,26 +27,67 @@ const navDrawerModule = (function() {
     }
 
     function _generateCharacterList(state) {
-        return state.characters.map(character => {
-            return `<li class="character-list-item">
-                ${character.name}<br>
-                ${character.attributes.race}<br>
+        return state.currentUser.characters.map(character => {
+            return `<li class="character-list-item" data-id="${character.id}">
+                ${character.name} the 
+                ${character.attributes.race} 
                 ${character.attributes.charClass}
                 </li>`
         })
         .join("")
-
     }
 
-    // This function renders the character page? (With all fields filled in)
-    function _openCharacter(state, id) {
-        _getCharacter(id)
-            .then(character => {
-                state.currentCharacter = character;
-                _render(state);
-            })
-            .catch(error => console.log(error));
+    // This function renders the character page (With all fields filled in), and closese the drawer
+    function _openCharacter(state) {
+        $(".character-list-item").click(function(event) { 
+            event.preventDefault();
+            state.navDrawerOpen = false;
+            console.log(event);
+            const id = $(this).attr("data-id");
+            apiModule.getCharacter(id)
+                .then(character => {
+                    state.currentCharacter = character;
+                    _render(state);
+                })
+                .catch(error => console.log(error));
+            _render(state);
+        })
     };
+
+    // function _deleteCharacter(state) {
+    //     $(".character-delete-button").click(event => {
+    //         event.preventDefault;
+    //         const id = $(this).closest("<li>");
+    //         console.log(id);
+    //         // apiModule.deleteCharacter(id)
+    //         //     .then(response => {
+    //         //         state.currentUser.characters.filter(char => char.id !== newCharacter.)
+    //         //     })
+    //     })
+    // }
+
+    function _postCharacter() {
+        return apiModule.postCharacter();
+    };
+
+    function _clickNewCharacter(state) {
+        $("#js-new-character-button").click(event => {
+            event.preventDefault();
+            console.log("New Character clicked");
+            state.navDrawerOpen = false;
+            console.log("Nav Drawer should close");
+            _postCharacter()
+                .then(blankCharacter => {
+                    state.currentCharacter = blankCharacter;
+                    state.currentUser.characters = [...state.currentUser.characters, blankCharacter]
+                    _render(state);
+                });
+            console.log("state.currentCharacter should be blank template");
+            _render(state);
+            // Problem: The form fields don't reset when this function is called, even though the
+            // state.currentCharacter is now blank. Think 'render' may need to be called again somewhere.
+        })
+    }
 
     function _open(state) {
         state.navDrawerOpen = true;
@@ -77,17 +118,19 @@ const navDrawerModule = (function() {
                 _render(state);
             });
 
-        _getUser(state)
-            .then(user => {
-                state.currentUser = user;
-                _render(state);
-            })
+        // _getUser(state)
+        //     .then(user => {
+        //         state.currentUser = user;
+        //         _render(state);
+        //     });
+
+        
     };
 
     
 
     function renderNavDrawer(state) {
-        const userEmail = _generateUser(state);
+        const userEmail = state.currentUser.email;
         const characterList = _generateCharacterList(state);
         const position = state.navDrawerOpen ? 0 : -250;
         const navDrawerContent = `
@@ -102,6 +145,7 @@ const navDrawerModule = (function() {
                         ${characterList}
                     </ul>
                 </section>
+                <button class="new-character-button" id="js-new-character-button">New Character</button>
             </div>
         `;
 
@@ -112,6 +156,9 @@ const navDrawerModule = (function() {
 
     function attachEventHandlers(state) {
         _close(state);
+        _clickNewCharacter(state);
+        _openCharacter(state);
+        // _deleteCharacter(state);
     // same as the other module (common)
 }
 
@@ -120,6 +167,9 @@ const navDrawerModule = (function() {
         render: renderNavDrawer,
         open: _open,
         close: _close,
+        _clickNewCharacter,
+        _openCharacter,// NEW, review Friday
+        // _deleteCharacter,
         initiate
     }
 

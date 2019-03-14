@@ -17,9 +17,27 @@ const signupModule = (function() {
     };
 
     function _submitUser(state) {
+
         $('#js-signup-button').click(function(event) {
             event.preventDefault();
+            const newEmail = document.getElementById("js-signup-email").value;
+            const newPassword = document.getElementById("js-signup-password").value;
+            console.log(newEmail);
+            apiModule.signup(newEmail, newPassword)
+                .then(newUser => {
+                    dummyUsers.push(newUser);
+                    state.currentUser = newUser;
+                    _render(state);
+                })
+                .catch(err => {
+                    console.log(err);
+
+                })
             // apiModule.postUser("this new user");
+
+            // THIS CODE IS THE NEW WAY OF CHANGING PAGES, WITH A ROUTER:
+            // let rootDiv = document.getElementById('root');
+            // rootDiv.innerHTML = routes[window.location.character];
 
             // THIS CODE IS THE OLD WAY OF CHANGING PAGES, WITHOUT THE ROUTER:
             state.currentPage = "character";

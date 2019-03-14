@@ -3,65 +3,106 @@ const apiModule = (function() {
     function getUser() {
         return new Promise(resolve => {
             const data = {
-                email: "Api@test.com"
-
+                email: "api@api.com",
+                password: "",
+                id: ""
             };
             resolve(data);
         });
     };
 
-    function postUser() {
-        return new Promise((resolve, reject) => {
-
+    function signup(email, password) {
+        const data = {
+            token: "3456",
+            id: "userId" + Math.floor(Math.random() * 1000),
+            email,
+            password,
+            characters: []
+        }
+        return new Promise(resolve => {
+            resolve(data);
         })
     };
 
-    function getCharacter() {
+    function login(email, password) {
+        const data = {
+            token: "3456",
+            id: "userId",
+            email,
+            password
+        }
         return new Promise(resolve => {
-            const data = {
+            resolve(data);
+        })
+    }
 
-            };
+    function getCharacter(id) {
+        return new Promise(resolve => {
+            const data = STORE.currentUser.characters.filter(char => char.id === id)[0];
             resolve(data);
         });
     };
 
     function getCharacters() {
+        // THis only needs to return the stuff that will show up in the characters list
+        // (only thing that calls this function)
         return new Promise(resolve => {
             const data = [
                 {
-                    name: "Bill",
+                    name: "",
                     attributes: {
-                        race: "Human",
-                        charClass: "Cleric"
-                    }
+                        race: "",
+                        charClass: "",
+                    },
+                    id: ""
                 },
-                {
-                    name: "Sharon",
-                    attributes: {
-                        race: "Dwarf",
-                        charClass: "Barbarian"
-                    }
-                } 
             ];
             resolve(data);
         })
     }
 
     function postCharacter() {
-
+        return new Promise(resolve => {
+            const data = {
+                // ...character,
+                name: "",
+                attributes: {
+                    race: "",
+                    charClass: "",
+                    accent: "",
+                    quirk: ""
+                },
+                stats: {
+                    STR: "10",
+                    CON: "10",
+                    DEX: "10",
+                    WIS: "10",
+                    CHA: "10",
+                    INT: "10"
+                },
+                background: "",
+                id: Math.floor(Math.random() * 1000)
+            };
+            resolve(data);
+        })
     };
 
-    function putCharacter() {
-
+    function putCharacter(character) {
+        return new Promise(resolve => {
+            resolve(character);
+        })
     };
 
-    function deleteCharacter() {
-
+    function deleteCharacter(id) {
+        return new Promise(resolve =>{
+            resolve();
+        })
     };
 
     return {
         getUser,
-        postUser,
+        login,
+        signup,
         getCharacter,
         getCharacters,
         postCharacter,
@@ -69,3 +110,10 @@ const apiModule = (function() {
         deleteCharacter
     };
 })();
+
+// Nav Drawer new character button will POST a new character (and close the drawer)
+// clicking on an existing character will close the drawer
+// PUT character will be hooked up to save button
+// DELETE character will be in the little tabs in the nav drawer (maybe a trash can button)
+// Try making a "are you sure?" thing that pops up before deletion (maybe an absolutely positioned Div)
+// Write tests for your endpoints as you go

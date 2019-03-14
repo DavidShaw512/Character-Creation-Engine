@@ -2,32 +2,34 @@
 
 const mongoose = require("mongoose");
 
+mongoose.Promise = global.Promise;
+
 const userSchema = mongoose.Schema({
     email: {
         type: String,
         unique: true,
         required: true
     },
-    passwordHash: "",
+    passwordHash: String,
     characters: [characterSchema]
 });
 
 const characterSchema = mongoose.Schema({
     attributes: {
-        name: "",
-        race: "",
-        class: "",
-        accent: "",
-        quirk: "",
-        background: "",
+        name: String,
+        race: String,
+        class: String,
+        accent: String,
+        quirk: String,
+        background: String,
     },
     stats: {
-        str: 0,
-        con: 0,
-        dex: 0,
-        wis: 0,
-        int: 0,
-        cha: 0,
+        STR: Number,
+        CON: Number,
+        DEX: Number,
+        WIS: Number,
+        CHA: Number,
+        INT: Number
     }
 });
 

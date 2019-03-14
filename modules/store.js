@@ -1,11 +1,11 @@
 const STORE = {
-    currentPage: "character",
+    currentPage: "login",
     currentUser: {
+        id: "",
         email: "",
         password: "",
-        id: ""
+        characters: []
     },
-    characters: [],
     currentCharacter: {
         name: "",
         attributes: {
@@ -22,7 +22,8 @@ const STORE = {
             CHA: 10,
             INT: 10
         },
-        background: ""
+        background: "",
+        id: ""
     },
     navDrawerOpen: false
 }

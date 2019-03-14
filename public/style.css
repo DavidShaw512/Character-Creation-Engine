@@ -223,7 +223,8 @@ BELOW: NAV DRAWER */
 .character-list {
     background-color: rgb(138, 138, 138);
     text-align: center;
-    padding-left: 0px;
+    padding: 5px 0px;
+    margin-bottom: 0px;
 }
 
 .character-list-item {
@@ -232,9 +233,10 @@ BELOW: NAV DRAWER */
     margin: 5px 1px;
     padding: 8px;
     width: 90%;
-    border-radius: 10px;
     border: 3px solid slateblue;
+    border-radius: 10px;
     display: inline-block;
+    position: relative;
     cursor: pointer;
 }
 
@@ -242,11 +244,32 @@ BELOW: NAV DRAWER */
     border: 3px solid skyblue;
 }
 
+.character-edit-button {
+    position: absolute;
+    top: 7px;
+    right: 3px;
+    font-size: 18px;
+    color: blue;
+    background-color: #e6e6e6;
+    border: none;
+}
+
+.character-delete-button {
+    position: absolute;
+    right: 7px;
+    bottom: 10px;
+    font-size: 18px;
+    color: red;
+    background-color: #e6e6e6;
+    border: none;
+}
+
 .new-character-button {
     font-size: 20px;
-    background-color: white;
+    color: white;
+    background-color: #2b74ff;
     border: none;
     border-radius: 50px;
-    padding: 5px 40px;
+    padding: 10px 30px;
     margin: 10px;
 }

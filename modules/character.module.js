@@ -13,35 +13,35 @@ const characterModule = (function() {
         return `
         <form class="build-form" id="js-build-form">
             <p class="build-paragraph">
-                Name: <input type="text" class="build-input text-input input-name" id="input-name" value="${state.currentCharacter.name}" placeholder="Leroy Jenkins"><br>
-                Race: <input type="text" class="build-input text-input input-race" id="input-race" value="${state.currentCharacter.attributes.race}" placeholder="Human"><br>
-                Class: <input type="text" class="build-input text-input input-class" id="input-charClass" value="${state.currentCharacter.attributes.charClass}" placeholder="Barbarian"><br>
-                Accent: <input type="text" class="build-input text-input input-accent" id="input-accent" value="${state.currentCharacter.attributes.accent}" placeholder="Loud"><br>
-                Quirk: <input type="text" class="build-input text-input input-quirk" id="input-quirk" value="${state.currentCharacter.attributes.quirk}" placeholder="Is very impatient">
+                Name: <input data-state="name" type="text" class="build-input text-input input-name" id="input-name" value="${state.currentCharacter.name}" placeholder="Leroy Jenkins"><br>
+                Race: <input data-state="attributes.race" type="text" class="build-input text-input input-race" id="input-race" value="${state.currentCharacter.attributes.race}" placeholder="Human"><br>
+                Class: <input data-state="attributes.charClass" type="text" class="build-input text-input input-class" id="input-charClass" value="${state.currentCharacter.attributes.charClass}" placeholder="Barbarian"><br>
+                Accent: <input data-state="attributes.accent" type="text" class="build-input text-input input-accent" id="input-accent" value="${state.currentCharacter.attributes.accent}" placeholder="Loud"><br>
+                Quirk: <input data-state="attributes.quirk" type="text" class="build-input text-input input-quirk" id="input-quirk" value="${state.currentCharacter.attributes.quirk}" placeholder="Is very impatient">
                 <br>
                 <div class="stats">
                     <div class="stat">
-                        <input type="number" class="build-input stat-input" id="input-STR" value="${state.currentCharacter.stats.STR}"><br>
+                        <input data-state="stats.STR" type="number" class="build-input stat-input" id="input-STR" value="${state.currentCharacter.stats.STR}"><br>
                         STR
                     </div> 
                     <div class="stat">
-                        <input type="number" class="build-input stat-input" id="input-CON" value="${state.currentCharacter.stats.CON}"><br>
+                        <input data-state="stats.CON" type="number" class="build-input stat-input" id="input-CON" value="${state.currentCharacter.stats.CON}"><br>
                         CON
                     </div> 
                     <div class="stat">
-                        <input type="number" class="build-input stat-input" id="input-DEX" value="${state.currentCharacter.stats.DEX}"><br>
+                        <input data-state="stats.DEX" type="number" class="build-input stat-input" id="input-DEX" value="${state.currentCharacter.stats.DEX}"><br>
                         DEX
                     </div> 
                     <div class="stat">
-                        <input type="number" class="build-input stat-input" id="input-CHA" value="${state.currentCharacter.stats.CHA}"><br>
+                        <input data-state="stats.CHA" type="number" class="build-input stat-input" id="input-CHA" value="${state.currentCharacter.stats.CHA}"><br>
                         CHA
                     </div> 
                     <div class="stat">
-                        <input type="number" class="build-input stat-input" id="input-WIS" value="${state.currentCharacter.stats.WIS}"><br>
+                        <input data-state="stats.WIS" type="number" class="build-input stat-input" id="input-WIS" value="${state.currentCharacter.stats.WIS}"><br>
                         WIS
                     </div> 
                     <div class="stat">
-                        <input type="number" class="build-input stat-input" id="input-INT" value="${state.currentCharacter.stats.INT}"><br>
+                        <input data-state="stats.INT" type="number" class="build-input stat-input" id="input-INT" value="${state.currentCharacter.stats.INT}"><br>
                         INT
                     </div> 
                 </div>
@@ -70,6 +70,12 @@ const characterModule = (function() {
         const accent = document.getElementById("input-accent");
         const quirk = document.getElementById("input-quirk");
 
+        // name.value = _randomize(randomNames);
+        // race.value = _randomize(randomRaces);
+        // charClass.value = _randomize(randomClasses);
+        // accent.value = _randomize(randomVoices);
+        // quirk.value = _randomize(randomQuirks);
+        // mar 6 comment
         state.currentCharacter.name = _randomize(randomNames);
         state.currentCharacter.attributes.race = _randomize(randomRaces);
         state.currentCharacter.attributes.charClass = _randomize(randomClasses);
@@ -81,6 +87,7 @@ const characterModule = (function() {
         charClass.value = state.currentCharacter.attributes.charClass;
         accent.value = state.currentCharacter.attributes.accent;
         quirk.value = state.currentCharacter.attributes.quirk;
+        // mar 6 comment
 
         // reassign all these to put them into the state, then call Render
         // Find a way to populate the state.currentCharacter with the value
@@ -110,6 +117,9 @@ const characterModule = (function() {
     // Problem (SOLVED): the stats aren't populating because they were formerly part of the DOM, but now they're
     // part of the STORE and they're not being populated from it. (the store object's key-value pairs need
     // to update when the randomizeAllStats function fires)
+
+    // Two-way data binding: when the State changes, the Value changes, and when the Value changes, the State changes
+
     // Problem: When saving a character, if there has been any custom input on the form, the character will be
     // saved properly but the custom field will revert back to it's pre-custom input (either empty or random).
     // Need to find a way to keep the custom value in the field after saving
@@ -123,45 +133,53 @@ const characterModule = (function() {
         });
     }
 
-    // this will POST the character if new, or PUT the character if editing an existing one.
+    function _customizeCharacter(state) {
+        $("input").change(function() {
+            console.log(this);
+            const path = $(this).attr("data-state").split(".");
+            console.log(path);
+            if (path.length === 1) {
+                state.currentCharacter[path[0]] = $(this).val();
+            } else {
+                state.currentCharacter[path[0]][path[1]] = $(this).val();
+            };
+            console.log(state);
+        })
+    }
+
+    // this will PUT the character - POST new characters will be taken care of by the NavDrawer "New Char" button.
     // 
     function _saveCharacter(state) {
         $("#js-save-button").click(event => {
             event.preventDefault;
-            const name = document.getElementById("input-name").value;
-            const attributes = {
-                race: document.getElementById("input-race").value,
-                charClass: document.getElementById("input-charClass").value,
-                accent: document.getElementById("input-accent").value,
-                quirk: document.getElementById("input-quirk").value
-            };
-            const stats = {
-                STR: document.getElementById("input-STR").value,
-                CON: document.getElementById("input-CON").value,
-                DEX: document.getElementById("input-DEX").value,
-                WIS: document.getElementById("input-WIS").value,
-                CHA: document.getElementById("input-CHA").value,
-                INT: document.getElementById("input-INT").value
-            };
-            const background = document.getElementById("input-background").value;
-
-            const newCharacter = {
-                name,
-                attributes,
-                stats,
-                background
-            };
-
-            // state.currentCharacter = newCharacter
-
-            console.log(newCharacter);
-            state.characters.push(newCharacter);
-            console.log(state.characters);
-            render(state);
-            alert("Character Saved!");
-            document.getElementById("js-build-form").reset();
+            const newCharacter = state.currentCharacter;
+            apiModule.putCharacter(newCharacter)
+                .then(response => {
+                    state.currentUser.characters = state.currentUser.characters.map(char => {
+                        return char.id === newCharacter.id ? {...char, ...newCharacter} : char
+                        
+                    })
+                    // DELETE will be similar, but use filter instead of map:
+                    // .filter(char => char.id !== newCharacter.id)
+                    alert("Character Saved!");
+                    render(state);  
+                })
         });
         
+    }
+
+    function _deleteCharacter(state) {
+        $("#js-delete-button").click(event => {
+            event.preventDefault;
+            const doomedCharacter = state.currentCharacter;
+            apiModule.deleteCharacter(doomedCharacter)
+                .then(response => {
+                    state.currentUser.characters = state.currentUser.characters.filter(char => char.id !== doomedCharacter.id);
+                    document.getElementById("js-build-form").reset();
+                })
+                alert("Character Deleted!");
+                render(state);
+        })
     }
     
 
@@ -185,6 +203,10 @@ const characterModule = (function() {
                         <span class="fas fa-dice"></span><br>
                         Randomize
                     </button>
+                    <button class="delete-button" id="js-delete-button">
+                        <span class="fas fa-times"></span><br>
+                        Delete
+                    </button>
                     <button class="save-button" id="js-save-button">
                         <span class="fas fa-save"></span><br>
                         Save
@@ -200,8 +222,9 @@ const characterModule = (function() {
         $('#root').append(characterPage);
         commonModule.attachEventHandlers(state);
         _randomizeCharacter(state);
-        // _customizeCharacter(state);
+        _customizeCharacter(state);
         _saveCharacter(state);
+        _deleteCharacter(state);
         // _toggleNavDrawer();
         // THis is gonna be handled by the
     }

@@ -1,9 +1,9 @@
-const randomNames = ["Tom", "Marie", "Zorg", "Salim", "Yasha", "Wilbur"];
+const randomNames = ["Tom", "Marie", "Ben", "Salim", "Yasha", "Wilbur", "Edgar", "Phil", "Carrie", "June", "Brak"];
 
-const randomRaces = ["Human", "Half-orc", "Half-elf", "Halfling", "Dwarf", "Tiefling"];
+const randomRaces = ["Human", "Elf", "Half-orc", "Half-elf", "Halfling", "Dwarf", "Tiefling", "Knome", "Dragonborn"];
 
-const randomClasses = ["Fighter", "Ranger", "Wizard", "Barbarian", "Paladin", "Rogue"];
+const randomClasses = ["Fighter", "Ranger", "Wizard", "Barbarian", "Paladin", "Rogue", "Sorcerer", "Druid", "Cleric"];
 
-const randomVoices = ["Posh British", "German", "Cajun", "Transatlantic", "Russian/Eastern European", "Southern Drawl"];
+const randomVoices = ["Posh British", "Chav British", "Boston", "Spanish", "French", "German", "Cajun", "Transatlantic", "Eastern European", "Southern Drawl", "Canadian", "Beach Bum", "Foghorn Leghorn"];
 
-const randomQuirks = ["Hates horses", "Takes trophies from kills", "Talks to themselves", "Collects buttons", "Is a kleptomaniac", "Quickly develops crushes"];
+const randomQuirks = ["Hates horses", "Takes kill trophies", "Talks to themselves", "Collects buttons", "Is a kleptomaniac", "Hopeless romantic", "Afraid of the dark", "Very claustrophobic", "Arachnophobe", "Afraid of heights", "Slow reader"];
