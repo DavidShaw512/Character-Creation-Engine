@@ -3,13 +3,15 @@
 const express = require("express");
 const characterRouter = express.Router();
 
-const { getCharacter } = require("./../controllers/character.controller");
+const characterController = require("./../controllers/character.controller");
 
-characterRouter.use("/characters");
-characterRouter.get(getCharacter);
-characterRouter.post(getCharacter);
+// Doesn't need character Id:
+characterRouter.get("/", characterController.getAllCharacters);
+characterRouter.post("/", characterController.postCharacter);
 
-characterRouter.use("/character/:id");
-characterRouter.get(getCharacter);
-characterRouter.post(getCharacter);
-characterRouter.delete(getCharacter);
+// Needs character Id:
+characterRouter.get("/:id", characterController.getCharacter);
+characterRouter.put("/:id", characterController.putCharacter);
+characterRouter.delete("/:id", characterController.deleteCharacter);
+
+module.exports = characterRouter
