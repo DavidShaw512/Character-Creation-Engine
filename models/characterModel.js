@@ -5,6 +5,10 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 const CharacterSchema = mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     name: {
         type: String,
         require: true
@@ -31,6 +35,8 @@ const CharacterSchema = mongoose.Schema({
 
 CharacterSchema.methods.serialize = function() {
     return {
+        user: this.user || "",
+        id: this._id || "",
         name: this.name || "",
         attributes: this.attributes || {
             race: "",
@@ -50,6 +56,4 @@ CharacterSchema.methods.serialize = function() {
     };
 };
 
-const Character = mongoose.model("Character", CharacterSchema);
-
-module.exports = { Character };
+module.exports = mongoose.model("Character", CharacterSchema);

@@ -2,16 +2,26 @@
 
 const express = require("express");
 const userRouter = express.Router();
-const userController = require("./../controllers/user.controller")
+// const userController = require("./../controllers/user.controller")
+const {
+    getAllUsers, // postUser was moved to the auth controller
+    getUser,
+    putUser,
+    deleteUser
+} = require("../controllers/userController")
 
 // Doesn't need user Id:
-userRouter.get("/", userController.getAllUsers);
-userRouter.post("/", userController.postUser);
+userRouter.route("/users")
+    .get(getAllUsers)
+
+// userRouter.get("/", userController.getAllUsers);
 
 // Needs user Id:
-userRouter.get("/:id", userController.getUser);
-userRouter.put("/:id", userController.putUser);
-userRouter.delete("/:id", userController.deleteUser);
+userRouter.route("/users/:id")
+    .get(getUser)
+    .put(putUser)
+    .delete(deleteUser)
+// userRouter.get("/:id", userController.getUser);
 
 
 
