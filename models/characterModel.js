@@ -1,6 +1,7 @@
 "use strict"
 
 const mongoose = require("mongoose");
+const User = require("./userModel");
 
 mongoose.Promise = global.Promise;
 
@@ -11,7 +12,7 @@ const CharacterSchema = mongoose.Schema({
     },
     name: {
         type: String,
-        require: true
+        required: true
     },
     attributes: {
         race: {type: String, default: ""},
@@ -56,4 +57,19 @@ CharacterSchema.methods.serialize = function() {
     };
 };
 
-module.exports = mongoose.model("Character", CharacterSchema);
+CharacterSchema.post('save', (doc, next) => {
+    User.find(doc.user)
+        .then(user => {
+            user.characters.push(doc);
+            user.save();
+        })
+        .then(() => {
+            next();
+        });
+})
+
+const Character = mongoose.model("Character", CharacterSchema);
+
+module.exports = { Character };
+
+// module.exports = mongoose.model("Character", CharacterSchema);

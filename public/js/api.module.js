@@ -1,5 +1,8 @@
 // This is where the API for the app will be defined, obviously
 const apiModule = (function() {
+
+    const { getToken } = require('./auth.module');
+
     function getUser() {
         return new Promise(resolve => {
             const data = {
@@ -19,12 +22,16 @@ const apiModule = (function() {
             password,
             characters: []
         }
-        return new Promise(resolve => {
-            resolve(data);
-        })
+        
+        // return new Promise(resolve => {
+        //     resolve(data);
+        // })
     };
 
     function login(email, password) {
+        // User logs in, recieves token, store token in auth module (make sure you've got good error handling)
+
+
         const data = {
             token: "3456",
             id: "userId",
@@ -37,10 +44,14 @@ const apiModule = (function() {
     }
 
     function getCharacter(id) {
-        return new Promise(resolve => {
-            const data = STORE.currentUser.characters.filter(char => char.id === id)[0];
-            resolve(data);
-        });
+        // Make request with authModule.request
+        // Redirect to login page if someone isn't logged in (authenticated)
+
+        
+        // return new Promise(resolve => {
+        //     const data = STORE.currentUser.characters.filter(char => char.id === id)[0];
+        //     resolve(data);
+        // });
     };
 
     function getCharacters() {
