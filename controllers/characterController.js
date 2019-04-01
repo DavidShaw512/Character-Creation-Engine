@@ -18,6 +18,7 @@ exports.postCharacter = (req, res) => {
     // push character into list of users' characters, save the user
     User.findOne(req.user.id)
         .then(user => {
+            const _user = user;
             return Character.create({
                 name: `${req.body.name}`,
                 attributes: req.body.attributes,
@@ -26,6 +27,7 @@ exports.postCharacter = (req, res) => {
                 user: user._id
             })
             .then(character => {
+                _user.characters.push(character);
                 res.status(201).json({
                     name: character.name,
                     attributes: {
@@ -66,15 +68,31 @@ exports.getCharacter = (req, res) => {
 };
 
 exports.putCharacter = (req, res) => {
+    const updates = {};
+    const updateableFields = ['name', 'attributes', 'stats', 'background'];
+    updateableFields.forEach(field => {
+        if (field in req.body) {
+            updates[field] = req.body[field];
+        };
+    });
+
     // Write an 'ownsCharacter' middleware to use here
     User.findOne(req.user.id)
         .then(user => {
             return user.characters.filter(character => character._id === req.params.id);
         })
         .then(character => {
-            
+            if (!character) {
+                res.status(404).send("Character not found");
+            } else {
+                Character.findByIdAndUpdate(req.params.id, { $set: updates }, { new: true });
+                res.status(201).send("Character updated");
+            };
         })
-        res.send("Character updated!");
+        .catch(err => {
+            console.log(err);
+            res.status(500).send("Something went wrong").json({err})
+        })
 };
 
 exports.deleteCharacter = (req, res) => {
@@ -93,6 +111,6 @@ exports.deleteCharacter = (req, res) => {
         })
         .catch(err => {
             console.log(err);
-            res.status(500).send("Something went wrong").json(err);
+            res.status(500).send("Something went wrong").json({err});
         })
 };
