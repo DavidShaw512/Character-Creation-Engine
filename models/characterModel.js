@@ -1,7 +1,7 @@
 "use strict"
 
 const mongoose = require("mongoose");
-const User = require("./userModel");
+const { User } = require("./userModel");
 
 mongoose.Promise = global.Promise;
 
@@ -60,11 +60,16 @@ CharacterSchema.methods.serialize = function() {
 CharacterSchema.post('save', (doc, next) => {
     User.find(doc.user)
         .then(user => {
-            user.characters.push(doc);
-            user.save();
+            console.log(user);
+            console.log(user[0]);
+            user[0].characters.push(doc);
+            user[0].save();
         })
         .then(() => {
             next();
+        })
+        .catch(err => {
+            console.log(err);
         });
 })
 

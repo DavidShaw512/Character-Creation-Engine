@@ -1,8 +1,17 @@
 function render(currentState) {
     $("#root").empty();
+    // check here if there is a token, if there is you can bypass login and go straight to character page
+    // check in the store, if token is there redirect to character page
     switch(currentState.currentPage) {
         case "login":
             console.log("Rendering login page");
+            // use auth module to get token
+            // const token = authModule.getToken();
+            // if (token) {
+            //     currentState.currentPage = "character";
+            //     render(currentState);
+            //     break;
+            // }
             loginModule.render(currentState);
             break;
         case "signup":

@@ -11,33 +11,22 @@ const loginModule = (function() {
             event.preventDefault();
             const email = document.getElementById("js-email").value;
             const password = document.getElementById("js-password").value;
+            // const rememberMe = document.getElementById("js-remember-me").value; PASS THIS INTO THE LOGIN FUNCTION
             apiModule.login(email, password)
                 .then(response => {
                     console.log(response);
-                    for (let i = 0; i < dummyUsers.length; i += 1) {
-                        if (dummyUsers[i].email === email && dummyUsers[i].password === password) {
-                            state.currentUser = dummyUsers[i];
-                            state.currentPage = "character";
-                            render(state);
-                        };
-                    };
-                    // state.currentUser = dummyUsers[0];
-                    // state.currentPage = "character";
-                    // render(state);
+                    state.currentUser = response // make sure it's actually returning the user so this makes sense;
+                    state.currentPage = "character";
+                    render(state);
+                    // Make a 'remember me' option
                 })
                 .catch(err => {
                     console.log(err);
                     // Handle authentication errors here
+                    // Put a loading spinner in case it's laggy, turns on in transit
+                    // and turns off on success/error
                 })
-        
-            // NEW WAY TO GO BETWEEN PAGES, WORRY ABOUT THIS LATER:
-            // let rootDiv = document.getElementById('root');
-            // rootDiv.innerHTML = routes[window.location.character];
-
-            // THIS CODE IS THE OLD WAY OF CHANGING PAGES, WITHOUT THE ROUTER:
-            state.currentPage = "character";
-            render(state);
-        });
+        })
     }
     
     function _handleClickSignUp(state) {
