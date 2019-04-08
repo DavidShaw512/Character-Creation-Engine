@@ -6,12 +6,12 @@ function render(currentState) {
         case "login":
             console.log("Rendering login page");
             // use auth module to get token
-            // const token = authModule.getToken();
-            // if (token) {
-            //     currentState.currentPage = "character";
-            //     render(currentState);
-            //     break;
-            // }
+            const token = authModule.getToken();
+            if (token) {
+                currentState.currentPage = "character";
+                render(currentState);
+                break;
+            }
             loginModule.render(currentState);
             break;
         case "signup":

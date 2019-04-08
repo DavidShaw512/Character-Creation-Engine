@@ -4,7 +4,7 @@ const commonModule = (function() {
         return `
             <nav class="nav" role="navigation">
                 <button class="nav-drawer-button"><span class="fas fa-bars"></span></button>
-                <p class="nav-title">Logout &nbsp;<span class="fas fa-dungeon"></span></p>
+                <p class="nav-title">CCE &nbsp;<span class="fas fa-dungeon"></span></p>
             </nav>
         `;
     }

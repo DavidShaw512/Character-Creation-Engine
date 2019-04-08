@@ -66,6 +66,17 @@ const navDrawerModule = (function() {
     //     })
     // }
 
+    function _logout(state) {
+        $('#js-logout-button').click(event => {
+            event.preventDefault();
+            console.log("Logout clicked");
+            authModule.logOut();
+            state.navDrawerOpen = false;
+            state.currentPage = "login";
+            _render(state)
+        });
+    }
+
     function _postCharacter() {
         return apiModule.postCharacter();
     };
@@ -138,6 +149,7 @@ const navDrawerModule = (function() {
                 <button class="drawer-close-button" id="js-drawer-close-button"><span class="fas fa-times"></span></button>
                 <h2 class="nav-drawer-user" id="js-nav-drawer-user">Logged in:<br>
                 ${userEmail}</h2>
+                <button class="logout-button" id="js-logout-button">Logout</button>
                 <hr>
                 <h3>My characters:</h3>
                 <section role="region" class="nav-drawer-characters" id="js-nav-drawer-characters">
@@ -158,6 +170,7 @@ const navDrawerModule = (function() {
         _close(state);
         _clickNewCharacter(state);
         _openCharacter(state);
+        _logout(state);
         // _deleteCharacter(state);
     // same as the other module (common)
 }
@@ -167,8 +180,9 @@ const navDrawerModule = (function() {
         render: renderNavDrawer,
         open: _open,
         close: _close,
+        _logout,
         _clickNewCharacter,
-        _openCharacter,// NEW, review Friday
+        _openCharacter,
         // _deleteCharacter,
         initiate
     }
