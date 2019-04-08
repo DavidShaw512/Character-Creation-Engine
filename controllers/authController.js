@@ -3,10 +3,12 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
-const createAuthToken = function(user) {
+const createAuthToken = function(user, rememberMe) {
     return jwt.sign({user}, config.JWT_SECRET, {
       subject: user.email,
-      expiresIn: config.JWT_EXPIRY,
+      expiresIn: rememberMe 
+        ? '30d' 
+        : config.JWT_EXPIRY, // use ternary operator for 'remember me'
       algorithm: 'HS256'
     });
 };
@@ -29,27 +31,33 @@ exports.testAuth = (req, res) => {
 }
 
 // All the "User.findOne..." stuff is already included in the localAuth strategy, no need to re-write it here.
-exports.userLogin = (req, res) => {
-    User.findOne({ email: req.body.email })
-        .then(user => {
-            if (!user) {
-                res.status(401).json({
-                    message: "Invalid credentials"
-                })
-            }
-            // return User.validatePassword(user.password);
-            bcrypt.compare(user.password, req.body.password, (err, result) => {
-                if (err) {
-                    console.log(err);
-                    res.send("Invalid credentials");
-                }
-                if (result) {
-                    const authToken = createAuthToken(req.user.serialize());
-                    res.json({authToken});
-                }
-            });
-        })
-};
+// exports.userLogin = (req, res) => {
+//     User.findOne({ email: req.body.email })
+//         .then(user => {
+//             if (!user) {
+//                 res.status(401).json({
+//                     message: "Invalid credentials"
+//                 });
+//                 console.log("Invalid credentials");
+//                 alert("Invalid credentials");
+//                 return
+//             }
+//             // return User.validatePassword(user.password);
+//             bcrypt.compare(user.password, req.body.password, (err, result) => {
+//                 if (err) {
+//                     console.log("Invalid credentials: " + err);
+//                     res.send("Invalid credentials");
+//                 }
+//                 if (result) {
+//                     // pass 'remember me' to createAuthToken (req.body.rememberMe)
+//                     const authToken = createAuthToken(req.user.serialize(), rememberMe);
+//                     res.json(user, {authToken});
+//                     authModule.storeToken(authToken);
+//                     STORE.currentUser = user;
+//                 }
+//             });
+//         })
+// };
 
 exports.refreshToken = (req, res) => {
     const authToken = createAuthToken(req.user);

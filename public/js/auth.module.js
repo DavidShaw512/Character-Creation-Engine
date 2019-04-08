@@ -14,10 +14,11 @@ const authModule = (function() {
     const request = (url, options) => {
         const token = getToken();
         const bearer = `Bearer ${token}`;
-        return fetch({
+        return fetch(url, {
             ...options,
             headers: {
-                "Authorization": bearer
+                "Authorization": bearer,
+                "Content-Type": "application/json"
             }
         })
     }

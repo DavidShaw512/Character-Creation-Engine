@@ -24,14 +24,13 @@ const signupModule = (function() {
             const newPassword = document.getElementById("js-signup-password").value;
             console.log(newEmail);
             apiModule.signup(newEmail, newPassword)
-                .then(newUser => {
-                    dummyUsers.push(newUser);
-                    state.currentUser = newUser;
-                    _render(state);
+                .then(() => {
+                    state.currentPage = "login";
+                    render(state);
                 })
                 .catch(err => {
                     console.log(err);
-
+                    // handle errors here
                 })
             // apiModule.postUser("this new user");
 
@@ -40,8 +39,7 @@ const signupModule = (function() {
             // rootDiv.innerHTML = routes[window.location.character];
 
             // THIS CODE IS THE OLD WAY OF CHANGING PAGES, WITHOUT THE ROUTER:
-            state.currentPage = "character";
-            render(state);
+            
         })
         
         
