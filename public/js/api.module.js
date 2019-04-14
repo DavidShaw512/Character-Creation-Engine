@@ -71,7 +71,7 @@ const apiModule = (function() {
         return request(url, options)
             .then(response => response.json())
             .then(responseJson => {
-                console.log("Logging in...");
+                console.log("Logging in...", responseJson.user);
                 storeToken(responseJson.authToken);
                 return responseJson.user;
             })
@@ -100,7 +100,7 @@ const apiModule = (function() {
         };
 
         // request contains all of the fetch stuff, no need to be explicit about it here
-        request(url, options)
+        return request(url, options)
             .then(response => response.json())
 
         // Old stuff:
@@ -113,18 +113,12 @@ const apiModule = (function() {
     function getCharacters() {
         // THis only needs to return the stuff that will show up in the characters list
         // (only thing that calls this function)
-        const token = getToken();
-        console.log(token);
         const url = '/api/characters';
         const options = {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-type': 'application/json'
-            }
+            method: 'GET'
         }
 
-        return fetch(url, options)
+        return request(url, options)
             .then(response => {
                 console.log(response);
                 return response.json();
@@ -147,77 +141,46 @@ const apiModule = (function() {
     }
 
     function postCharacter(character) {
-        const token = getToken();
         const url = `/api/characters`;
         const options = {
             method: 'POST',
-            body: JSON.stringify(character),
-            headers: {
-                'Authentication': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
+            body: JSON.stringify(character)
         };
 
-        fetch(url, options)
+        return request(url, options)
             .then(response => response.json())
-            .then(responseJson => console.log("Success!", responseJson));
-            // .catch(err => console.log(err));
-
-        // Old stuff:
-        // return new Promise(resolve => {
-        //     const data = {
-        //         // ...character,
-        //         name: "",
-        //         attributes: {
-        //             race: "",
-        //             charClass: "",
-        //             accent: "",
-        //             quirk: ""
-        //         },
-        //         stats: {
-        //             STR: "10",
-        //             CON: "10",
-        //             DEX: "10",
-        //             WIS: "10",
-        //             CHA: "10",
-        //             INT: "10"
-        //         },
-        //         background: "",
-        //         id: Math.floor(Math.random() * 1000)
-        //     };
-        //     resolve(data);
-        // })
+            .then(responseJson => {
+                console.log("Blank character posted ", responseJson);
+                return responseJson;
+            })
+            .catch(err => console.log(err));
     };
 
     function putCharacter(character) {
-
-
-        // Old stuff:
-        return new Promise(resolve => {
-            resolve(character);
-        })
-    };
-
-    function deleteCharacter(id) {
-        const token = authModule.getToken();
-        const url = `/api/characters/${id}`;
+        const url = `/api/characters/${character.id}`;
         const options = {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
+            method: 'PUT',
+            body: JSON.stringify(character)
         };
 
-        fetch(url, options)
+        return request(url, options)
+            .then(response => response.json())
+            .then(responseJson => {
+                console.log("Character updated", responseJson);
+
+            })
+    };
+
+    function deleteCharacter(characterId) {
+        const url = `/api/characters/${characterId}`;
+        const options = {
+            method: 'DELETE'
+        };
+
+        return request(url, options)
             .then(response => response.json())
             .then(responseJson => console.log("Delete Success!", responseJson))
-            .catch(error => console.log("Error!", error))
-
-        // Old stuff:
-        return new Promise(resolve =>{
-            resolve();
-        })
+            .catch(error => console.log("Error!", error));
     };
 
     return {

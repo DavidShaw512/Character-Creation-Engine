@@ -12,11 +12,11 @@ const CharacterSchema = mongoose.Schema({
     },
     name: {
         type: String,
-        required: true
+        default: ""
     },
     attributes: {
         race: {type: String, default: ""},
-        class: {type: String, default: ""},
+        charClass: {type: String, default: ""},
         accent: {type: String, default: ""},
         quirk: {type: String, default: ""}
     },
@@ -37,11 +37,11 @@ const CharacterSchema = mongoose.Schema({
 CharacterSchema.methods.serialize = function() {
     return {
         user: this.user || "",
-        id: this._id || "",
+        id: this.id || "",
         name: this.name || "",
         attributes: this.attributes || {
             race: "",
-            class: "",
+            charClass: "",
             accent: "",
             quirk: ""
         },

@@ -17,6 +17,7 @@ const loginModule = (function() {
                     console.log(response);
                     state.currentUser = response // make sure it's actually returning the user so this makes sense;
                     state.currentPage = "character";
+                    console.log(STORE);
                     render(state);
                     // Make a 'remember me' option
                 })

@@ -125,6 +125,7 @@ const characterModule = (function() {
     // Need to find a way to keep the custom value in the field after saving
 
     function _randomizeCharacter(state) {
+        // Think about moving this out of here and into common, so it's a helper function that can be called anywhere
         $("#js-randomize-button").on("click", event => {
             event.preventDefault;
             _randomizeAllStats(state);
@@ -148,32 +149,43 @@ const characterModule = (function() {
     }
 
     // this will PUT the character - POST new characters will be taken care of by the NavDrawer "New Char" button.
-    // 
+    // If id exists on character, use PUT - if no Id exists, use POST
+    // Use the thinkful resources, ask people on slack
     function _saveCharacter(state) {
         $("#js-save-button").click(event => {
             event.preventDefault;
             const newCharacter = state.currentCharacter;
-            apiModule.putCharacter(newCharacter)
-                .then(response => {
-                    state.currentUser.characters = state.currentUser.characters.map(char => {
-                        return char.id === newCharacter.id ? {...char, ...newCharacter} : char
-                        
+            console.log("New character: " + newCharacter);
+            if (newCharacter.id) {
+                apiModule.putCharacter(newCharacter)
+                    .then(response => {
+                        state.currentUser.characters = state.currentUser.characters.map(char => {
+                            return char.id === newCharacter.id ? {...char, ...newCharacter} : char
+                        })
                     })
-                    // DELETE will be similar, but use filter instead of map:
-                    // .filter(char => char.id !== newCharacter.id)
-                    alert("Character Saved!");
-                    render(state);  
-                })
-        });
-        
-    }
+            } else {
+                apiModule.postCharacter(newCharacter)
+                    .then(response => {
+                        state.currentUser.characters = [...state.currentUser.characters, newCharacter];
+                    })
+            }
+            // DELETE will be similar, but use filter instead of map:
+            // .filter(char => char.id !== newCharacter.id)
+            alert("Character Saved!");
+            render(state);  
+        })
+    };
 
     function _deleteCharacter(state) {
         $("#js-delete-button").click(event => {
             event.preventDefault;
+            const listedCharacters = document.getElementsByClassName("character-list-item");
+            console.log(listedCharacters);
             const doomedCharacter = state.currentCharacter;
-            apiModule.deleteCharacter(doomedCharacter)
+            console.log("Character to be deleted: " + doomedCharacter);
+            apiModule.deleteCharacter(doomedCharacter.id)
                 .then(response => {
+                    console.log("Response from apiModule.deleteCharacter: " + response);
                     state.currentUser.characters = state.currentUser.characters.filter(char => char.id !== doomedCharacter.id);
                     document.getElementById("js-build-form").reset();
                 })

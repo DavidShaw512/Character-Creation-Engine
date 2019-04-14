@@ -17,7 +17,7 @@ const localStrategy = new LocalStrategy(
   }, 
   (email, password, callback) => {
     let user;
-    User.findOne({ email: email })
+    User.findOne({ email: email }).populate('characters')
       .then(_user => {
         user = _user;
         if (!user) {

@@ -18,7 +18,7 @@ const characterSchema = mongoose.Schema({
     attributes: {
         name: String,
         race: String,
-        class: String,
+        charClass: String,
         accent: String,
         quirk: String,
         background: String,

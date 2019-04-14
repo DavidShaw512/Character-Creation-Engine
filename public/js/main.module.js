@@ -26,9 +26,9 @@ function render(currentState) {
 }
 
 function main() {
-    navDrawerModule.initiate(render, STORE);
     loginModule.initiate(render);
     signupModule.initiate(render);
+    navDrawerModule.initiate(render, STORE);
     characterModule.initiate(render);
     render(STORE);
 }

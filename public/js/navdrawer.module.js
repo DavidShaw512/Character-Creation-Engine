@@ -27,8 +27,10 @@ const navDrawerModule = (function() {
     }
 
     function _generateCharacterList(state) {
+        console.log("Current user: " + state.currentUser);
         return state.currentUser.characters.map(character => {
-            return `<li class="character-list-item" data-id="${character.id}">
+            console.log(character, character.name);
+            return `<li class="character-list-item" data-id="${character._id || character.id}">
                 ${character.name} the 
                 ${character.attributes.race} 
                 ${character.attributes.charClass}
@@ -49,8 +51,9 @@ const navDrawerModule = (function() {
                     state.currentCharacter = character;
                     _render(state);
                 })
-                .catch(error => console.log(error));
-            _render(state);
+                .catch(error => {
+                    console.log("Error: " + error);
+                });
         })
     };
 
@@ -77,31 +80,50 @@ const navDrawerModule = (function() {
         });
     }
 
-    function _postCharacter() {
-        return apiModule.postCharacter();
+    function _postCharacter(character) {
+        return apiModule.postCharacter(character);
     };
 
     function _clickNewCharacter(state) {
+        const character = {
+            name: "",
+            attributes: {
+                race: "",
+                charClass: "",
+                accent: "",
+                quirk: ""
+            },
+            stats: {
+                STR: "10",
+                CON: "10",
+                DEX: "10",
+                WIS: "10",
+                CHA: "10",
+                INT: "10"
+            },
+            background: "",
+        }
         $("#js-new-character-button").click(event => {
             event.preventDefault();
             console.log("New Character clicked");
             state.navDrawerOpen = false;
             console.log("Nav Drawer should close");
-            _postCharacter()
+            apiModule.postCharacter(character)
                 .then(blankCharacter => {
+                    // Use a helper function to randomize the new blank character
                     state.currentCharacter = blankCharacter;
                     state.currentUser.characters = [...state.currentUser.characters, blankCharacter]
                     _render(state);
+                })
+                .catch(error => {
+                    console.log("Error: ", error);
                 });
-            console.log("state.currentCharacter should be blank template");
-            _render(state);
-            // Problem: The form fields don't reset when this function is called, even though the
-            // state.currentCharacter is now blank. Think 'render' may need to be called again somewhere.
         })
     }
 
     function _open(state) {
         state.navDrawerOpen = true;
+        _generateCharacterList(state);
         console.log("opening nav drawer");
         _render(state);
     }
@@ -123,11 +145,11 @@ const navDrawerModule = (function() {
         };
 
         // This might cause some issues, keep an eye out
-        _getCharacters(state)
-            .then(characters => {
-                state.characters = characters;
-                _render(state);
-            });
+        // _getCharacters(state)
+        //     .then(characters => {
+        //         state.characters = characters;
+        //         _render(state);
+        //     });
 
         // _getUser(state)
         //     .then(user => {
@@ -153,7 +175,7 @@ const navDrawerModule = (function() {
                 <hr>
                 <h3>My characters:</h3>
                 <section role="region" class="nav-drawer-characters" id="js-nav-drawer-characters">
-                    <ul class="character-list">
+                    <ul class="character-list" id="js-character-list">
                         ${characterList}
                     </ul>
                 </section>
