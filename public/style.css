@@ -20,6 +20,10 @@ body {
     margin: 0 auto;
 }
 
+.hidden {
+    display: none;
+}
+
 header {
     text-align: center;
 }
@@ -46,12 +50,18 @@ header {
     margin-top: 5px;
 }
 
+.bad-credentials-message {
+    text-align: center;
+    color: #d40000;
+    font-weight: 600;
+}
+
 .new-user-link {
     text-align: center;
 }
 
 /* ABOVE: LANDING PAGE  */
-/* BELOW: USER PROFILE PAGE */
+/* BELOW: CHARACTER BUILD PAGE/NAV BAR */
 
 .nav {
     background-color: #5a5a5a;

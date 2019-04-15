@@ -3,12 +3,21 @@ const authModule = (function() {
         return localStorage.getItem("token");
     }
 
+    const getUser = () => {
+        return localStorage.getItem("user");
+    }
+
     const storeToken = (token) => {
         localStorage.setItem("token", token);
     }
 
+    const storeUser = (user) => {
+        localStorage.setItem("user", user);
+    }
+
     const logOut = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
     }
 
     const request = (url, options) => {
@@ -23,5 +32,5 @@ const authModule = (function() {
         })
     }
 
-    return { getToken, storeToken, logOut, request }
+    return { getToken, getUser, storeToken, storeUser, logOut, request }
 })();

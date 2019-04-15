@@ -16,7 +16,7 @@ const characterModule = (function() {
                 Name: <input data-state="name" type="text" class="build-input text-input input-name" id="input-name" value="${state.currentCharacter.name}" placeholder="Leroy Jenkins"><br>
                 Race: <input data-state="attributes.race" type="text" class="build-input text-input input-race" id="input-race" value="${state.currentCharacter.attributes.race}" placeholder="Human"><br>
                 Class: <input data-state="attributes.charClass" type="text" class="build-input text-input input-class" id="input-charClass" value="${state.currentCharacter.attributes.charClass}" placeholder="Barbarian"><br>
-                Accent: <input data-state="attributes.accent" type="text" class="build-input text-input input-accent" id="input-accent" value="${state.currentCharacter.attributes.accent}" placeholder="Loud"><br>
+                Voice: <input data-state="attributes.accent" type="text" class="build-input text-input input-accent" id="input-accent" value="${state.currentCharacter.attributes.accent}" placeholder="Loud"><br>
                 Quirk: <input data-state="attributes.quirk" type="text" class="build-input text-input input-quirk" id="input-quirk" value="${state.currentCharacter.attributes.quirk}" placeholder="Is very impatient">
                 <br>
                 <div class="stats">
@@ -208,18 +208,19 @@ const characterModule = (function() {
         const characterPageContent = `
             <div class="page-container">
                 <header class="build-page-header" role="banner">
-                    <h1>Build a New Character</h1>
+                    <h1 id="js-build-page-header-text">Build a New Character</h1>
                 </header>
                 <div class="button-container">
-                    <button class="randomize-button" id="js-randomize-button">
+                    <button class="randomize-button build-button" id="js-randomize-button">
                         <span class="fas fa-dice"></span><br>
                         Randomize
                     </button>
-                    <button class="delete-button" id="js-delete-button">
+                    <button class="delete-button build-button" id="js-delete-button">
                         <span class="fas fa-times"></span><br>
                         Delete
                     </button>
-                    <button class="save-button" id="js-save-button">
+                    <br>
+                    <button class="save-button build-button" id="js-save-button">
                         <span class="fas fa-save"></span><br>
                         Save
                     </button>

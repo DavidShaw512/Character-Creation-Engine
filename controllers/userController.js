@@ -56,3 +56,25 @@ exports.deleteUser = (req, res) => {
     //     message: "User deleted!"
     // });
 };
+
+exports.getCurrentUser = (req, res) => {
+    console.log("req.user = ", req.user);
+    User.findOne({ email: req.user.email }).populate('characters')
+      .then(user => {
+        console.log("Here's the user", user);
+        if (user) {
+            res.status(200).json(user.serialize());
+        } else {
+            res.status(404);
+        }
+        
+      })
+      .catch(error => {
+        console.log(error);
+            res.status(422).json({
+                code: 422,
+                error,
+                message: "Something bad happened"
+            });
+      });
+}

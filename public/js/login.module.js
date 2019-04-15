@@ -15,6 +15,7 @@ const loginModule = (function() {
             apiModule.login(email, password)
                 .then(response => {
                     console.log(response);
+                    // localStorage.setItem("user", response);
                     state.currentUser = response // make sure it's actually returning the user so this makes sense;
                     state.currentPage = "character";
                     console.log(STORE);
@@ -22,7 +23,11 @@ const loginModule = (function() {
                     // Make a 'remember me' option
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.log("Error: " + err);
+                    state.currentPage = "login";
+                    render(state);
+                    $("#js-bad-credentials-message").removeClass("hidden");
+
                     // Handle authentication errors here
                     // Put a loading spinner in case it's laggy, turns on in transit
                     // and turns off on success/error
@@ -67,6 +72,9 @@ const loginModule = (function() {
                         <input type="password" class="login-field" id="js-password" placeholder="Password"><br>
                         <button class="login-button" id="js-login-button">Login</button>
                     </form>
+                    <p class="bad-credentials-message hidden" id="js-bad-credentials-message">
+                        You shall not pass! (Bad credentials)
+                    </p>
                 </div>
                 <p class="new-user-link">New to us? <button id="js-new-user-link" style="border: 1px dotted">Sign up here</button></p>
             </div>

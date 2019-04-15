@@ -31,6 +31,7 @@ const signupModule = (function() {
                 .catch(err => {
                     console.log(err);
                     // handle errors here
+                    alert("Error: " + err);
                 })
             // apiModule.postUser("this new user");
 

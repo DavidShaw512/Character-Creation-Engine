@@ -6,6 +6,7 @@ const apiModule = (function() {
     const { 
         getToken,
         storeToken,
+        storeUser,
         request
     } = authModule;
 
@@ -73,22 +74,20 @@ const apiModule = (function() {
             .then(responseJson => {
                 console.log("Logging in...", responseJson.user);
                 storeToken(responseJson.authToken);
+                storeUser(responseJson.user);
                 return responseJson.user;
             })
             .catch(error => console.log("Error:", error));
+    }
 
+    function getCurrentUser() {
+        const url = `/api/users/me`;
+        const options = {
+            method: 'GET'
+        };
 
-
-        // Old stuff:
-        // const data = {
-        //     token: "3456",
-        //     id: "userId",
-        //     email,
-        //     password
-        // }
-        // return new Promise(resolve => {
-        //     resolve(data);
-        // })
+        return request(url, options)
+            .then(response => response.json())
     }
 
     function getCharacter(id) {
@@ -102,12 +101,6 @@ const apiModule = (function() {
         // request contains all of the fetch stuff, no need to be explicit about it here
         return request(url, options)
             .then(response => response.json())
-
-        // Old stuff:
-        // return new Promise(resolve => {
-        //     const data = STORE.currentUser.characters.filter(char => char.id === id)[0];
-        //     resolve(data);
-        // });
     };
 
     function getCharacters() {
@@ -186,6 +179,7 @@ const apiModule = (function() {
     return {
         getUser,
         login,
+        getCurrentUser,
         signup,
         getCharacter,
         getCharacters,

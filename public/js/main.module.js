@@ -8,11 +8,20 @@ function render(currentState) {
             // use auth module to get token
             const token = authModule.getToken();
             if (token) {
-                currentState.currentPage = "character";
-                render(currentState);
-                break;
+                apiModule.getCurrentUser()
+                    .then(user => {
+                        currentState.currentUser = user;
+                        currentState.currentPage = "character";
+                        render(currentState);
+                    })
+                    .catch(error => {
+                        currentState.currentPage = "login";
+                        render(currentState);
+                    })
+            } else {
+                currentState.currentPage = "login";
+                loginModule.render(currentState);
             }
-            loginModule.render(currentState);
             break;
         case "signup":
             console.log("Rendering signup page");

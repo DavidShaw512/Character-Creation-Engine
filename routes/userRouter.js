@@ -7,14 +7,19 @@ const {
     getAllUsers, // postUser was moved to the auth controller
     getUser,
     putUser,
-    deleteUser
+    deleteUser,
+    getCurrentUser
 } = require("../controllers/userController")
 
 // Doesn't need user Id:
 userRouter.route("/users")
     .get(getAllUsers)
+    
 
 // userRouter.get("/", userController.getAllUsers);
+
+userRouter.route("/users/me")
+    .get(getCurrentUser)
 
 // Needs user Id:
 userRouter.route("/users/:id")
@@ -22,6 +27,8 @@ userRouter.route("/users/:id")
     .put(putUser)
     .delete(deleteUser)
 // userRouter.get("/:id", userController.getUser);
+
+
 
 
 
