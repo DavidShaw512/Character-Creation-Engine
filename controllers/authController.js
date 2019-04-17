@@ -158,10 +158,4 @@ exports.newUserSignup = (req, res, next) => {
             };
             res.status(500).json({code: 500, message: "Internal server error"});
         });
-        
-    // BELOW: old stuff    ABOVE: new stuff
-    // console.log("POST request to users");
-    // res.status(200).json({
-    //     message: "User posted!",
-    // });
 };
