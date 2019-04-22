@@ -70,11 +70,12 @@ exports.newUserSignup = (req, res, next) => {
     // First, check for correct fields:
     const requiredFields = ["email", "password"];
     const missingField = requiredFields.find(field => !(field in req.body));
+    console.log("Missing field: ", missingField);
     if (missingField) {
         const newError = new Error("Validation error");
         newError.status = 422;
         newError.message = "Signup requires email and password";
-        next(newError);
+        return next(newError);
     };
 
     // Create helper function that can validate on any endpoint (be lazy, DRY)

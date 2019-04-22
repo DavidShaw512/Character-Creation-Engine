@@ -3,6 +3,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 const { app, runServer, closeServer } = require('../server');
 const { User } = require('../models/userModel');
@@ -12,7 +13,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp)
 
-describe("Authorization endpoints", function() {
+describe("Auth endpoints", function() {
     const email = "sample@sample.com";
     const password = "samplepassword"
 
@@ -20,24 +21,88 @@ describe("Authorization endpoints", function() {
         return runServer(TEST_DATABASE_URL);
     });
 
-    after(function() {
-        return closeServer();
+    after(function(done) {
+        closeServer()
+            .then(() => done())
+            .catch(done);
     });
 
-    beforeEach(function() {
-        return User.hashPassword(password).then(password => {
-            User.create({
-                email,
-                password
-            })
+    afterEach(function(done) {
+        User.deleteOne({email})
+            .then(() => done())
+            .catch(done);
+    });
+
+    
+
+    describe("/auth/signup", function() {
+
+        beforeEach(function() {
+
         });
-    });
+    
+        afterEach(function(done) {
+            User.deleteOne({email})
+                .then(() => done())
+                .catch(done);
+        });
 
-    afterEach(function() {
-        return User.deleteOne({email});
-    });
+        it("Should reject a signup request with no credentials", function() {
+            return chai.request(app)
+                .post("/auth/signup")
+                .then(res => {
+                    console.log("-----Auth signup test response body: ", res.body);
+                    expect(res).to.have.status(422);
+                    // expect(res.body.reason).to.equal("Validation error");
+                    // expect(res.body.message).to.equal("Signup requires email and password")
+                })
+                // .catch(err => {
+                //     console.log("Signup test error: ", err)
+                // })
+        });
 
-    describe("/auth/login", function() {
+
+
+
+
+
+        it("Should create a new user", function() {
+            return chai.request(app)
+                .post("/auth/signup")
+                .send({
+                    email,
+                    password
+                })
+                .then(res => {
+                    console.log("----- Auth signup create user test res.body: ", res.body);
+                    expect(res).to.have.status(201);
+                })
+        })
+
+    })
+
+    //ABOVE: USER SIGNUP ENDPOINT TESTS
+    //BELOW: USER LOGIN ENDPOINT TESTS
+
+    describe("/auth/login", function() { // USER DELETION ISSUE HAPPENS IN HERE !!!!!!!!!!!!!!!!!!!!!!!
+
+        beforeEach(function(done) {
+            User.hashPassword(password).then(password => {
+                return User.create({
+                    email,
+                    password
+                })
+            })
+            .then(() => done())
+            .catch(done);
+        });
+
+        afterEach(function(done) {
+            User.deleteOne({email})
+                .then(() => done())
+                .catch(done);
+        });
+
         it("Should reject login request with no credentials", function() {
             return chai.request(app)
                 .post("/auth/login")

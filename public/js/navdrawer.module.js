@@ -8,6 +8,25 @@ const navDrawerModule = (function() {
 
     let _render = false;
 
+    const blankCharacter = {
+        name: "",
+        attributes: {
+            race: "",
+            charClass: "",
+            accent: "",
+            quirk: ""
+        },
+        stats: {
+            STR: "10",
+            CON: "10",
+            DEX: "10",
+            WIS: "10",
+            CHA: "10",
+            INT: "10"
+        },
+        background: "",
+    }
+
     // function _getUser() {
     //     return apiModule.getUser();
     // }
@@ -73,6 +92,7 @@ const navDrawerModule = (function() {
         $('#js-logout-button').click(event => {
             event.preventDefault();
             console.log("Logout clicked");
+            state.currentCharacter = blankCharacter;
             authModule.logOut();
             state.navDrawerOpen = false;
             state.currentPage = "login";
@@ -85,34 +105,18 @@ const navDrawerModule = (function() {
     };
 
     function _clickNewCharacter(state) {
-        const character = {
-            name: "",
-            attributes: {
-                race: "",
-                charClass: "",
-                accent: "",
-                quirk: ""
-            },
-            stats: {
-                STR: "10",
-                CON: "10",
-                DEX: "10",
-                WIS: "10",
-                CHA: "10",
-                INT: "10"
-            },
-            background: "",
-        }
+        
         $("#js-new-character-button").click(event => {
             event.preventDefault();
             console.log("New Character clicked");
             state.navDrawerOpen = false;
             console.log("Nav Drawer should close");
-            apiModule.postCharacter(character)
+            apiModule.postCharacter(blankCharacter)
                 .then(blankCharacter => {
                     // Use a helper function to randomize the new blank character
                     state.currentCharacter = blankCharacter;
                     state.currentUser.characters = [...state.currentUser.characters, blankCharacter]
+                    commonModule.randomizeCharacter(state);
                     _render(state);
                 })
                 .catch(error => {
@@ -165,13 +169,13 @@ const navDrawerModule = (function() {
     function renderNavDrawer(state) {
         const userEmail = state.currentUser.email;
         const characterList = _generateCharacterList(state);
-        const position = state.navDrawerOpen ? 0 : -250;
+        const position = state.navDrawerOpen ? 0 : -260;
         const navDrawerContent = `
             <div class="nav-drawer" style="left: ${position}px" id="js-nav-drawer">
                 <button class="drawer-close-button" id="js-drawer-close-button"><span class="fas fa-times"></span></button>
                 <h2 class="nav-drawer-user" id="js-nav-drawer-user">Logged in:<br>
-                ${userEmail}</h2>
-                <button class="logout-button" id="js-logout-button">Logout</button>
+                <span class="user-email">${userEmail}</span></h2>
+                <button class="logout-button" id="js-logout-button">Logout <span class="fas fa-door-open"></span></button>
                 <hr>
                 <h3>My characters:</h3>
                 <section role="region" class="nav-drawer-characters" id="js-nav-drawer-characters">

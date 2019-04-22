@@ -29,6 +29,7 @@ const signupModule = (function() {
                     render(state);
                 })
                 .catch(err => {
+
                     console.log(err);
                     // handle errors here
                     alert("Error: " + err);
@@ -44,6 +45,14 @@ const signupModule = (function() {
         })
         
         
+    }
+
+    function _returnToLogin(state) {
+        $("#js-login-return-button").click(function(event) {
+            event.preventDefault();
+            state.currentPage = "login";
+            render(state);
+        })
     }
 
     // Public
@@ -63,7 +72,9 @@ const signupModule = (function() {
                 </header>
                 <div class="login-box" role="section">
                     ${signupForm}
+                    <button class="login-return-button" id="js-login-return-button">Back to Login Screen</button>
                 </div>
+                
             </div>
         `;
 
@@ -71,6 +82,7 @@ const signupModule = (function() {
         $("#root").append(signupPage);
         _renderForm();
         _submitUser(state);
+        _returnToLogin(state);
     }
 
     return {

@@ -6,6 +6,26 @@ const characterModule = (function() {
     // Private
 
     let _render = false;
+
+    const blankCharacter = {
+        name: "",
+        attributes: {
+            race: "",
+            charClass: "",
+            accent: "",
+            quirk: ""
+        },
+        stats: {
+            STR: 10,
+            CON: 10,
+            DEX: 10,
+            WIS: 10,
+            CHA: 10,
+            INT: 10
+        },
+        background: "",
+        id: ""
+    };
     
     function _generateCharacterForm(state) {
         // Make the list of stats a ul instead of a bunch of divs
@@ -128,8 +148,9 @@ const characterModule = (function() {
         // Think about moving this out of here and into common, so it's a helper function that can be called anywhere
         $("#js-randomize-button").on("click", event => {
             event.preventDefault;
-            _randomizeAllStats(state);
-            _randomizeAttributes(state);
+            commonModule.randomizeCharacter(state);
+            // _randomizeAllStats(state);
+            // _randomizeAttributes(state);
             render(state);
         });
     }
@@ -159,18 +180,38 @@ const characterModule = (function() {
             if (newCharacter.id) {
                 apiModule.putCharacter(newCharacter)
                     .then(response => {
+                        console.log(response);
                         state.currentUser.characters = state.currentUser.characters.map(char => {
-                            return char.id === newCharacter.id ? {...char, ...newCharacter} : char
+                            return (char.id || char._id) === newCharacter.id ? {...char, ...newCharacter} : char
                         })
                     })
             } else {
                 apiModule.postCharacter(newCharacter)
                     .then(response => {
-                        state.currentUser.characters = [...state.currentUser.characters, newCharacter];
+                        console.log(response);
+                        state.currentUser.characters = [...state.currentUser.characters, response];
                     })
             }
             // DELETE will be similar, but use filter instead of map:
             // .filter(char => char.id !== newCharacter.id)
+            state.currentCharacter = {
+                name: "",
+                attributes: {
+                    race: "",
+                    charClass: "",
+                    accent: "",
+                    quirk: ""
+                },
+                stats: {
+                    STR: 10,
+                    CON: 10,
+                    DEX: 10,
+                    WIS: 10,
+                    CHA: 10,
+                    INT: 10
+                },
+                background: "",
+            };
             alert("Character Saved!");
             render(state);  
         })
@@ -180,17 +221,41 @@ const characterModule = (function() {
         $("#js-delete-button").click(event => {
             event.preventDefault;
             const listedCharacters = document.getElementsByClassName("character-list-item");
-            console.log(listedCharacters);
             const doomedCharacter = state.currentCharacter;
-            console.log("Character to be deleted: " + doomedCharacter);
+            console.log("Character list: ", listedCharacters);
+            console.log("First characters data: ", listedCharacters[0].dataset.id);
+            console.log("Character to be deleted: " + doomedCharacter.id);
             apiModule.deleteCharacter(doomedCharacter.id)
                 .then(response => {
                     console.log("Response from apiModule.deleteCharacter: " + response);
-                    state.currentUser.characters = state.currentUser.characters.filter(char => char.id !== doomedCharacter.id);
+                    // state.currentCharacter = blankCharacter;
                     document.getElementById("js-build-form").reset();
-                })
-                alert("Character Deleted!");
-                render(state);
+                    // render(state);
+                    
+                });
+            // console.log("Current user BEFORE filter: ", STORE.currentUser);
+            state.currentUser.characters = state.currentUser.characters.filter(char => (char._id || char.id) !== doomedCharacter.id);
+            // console.log("Current user AFTER filter: ", STORE.currentUser);
+            state.currentCharacter = {
+                name: "",
+                attributes: {
+                    race: "",
+                    charClass: "",
+                    accent: "",
+                    quirk: ""
+                },
+                stats: {
+                    STR: 10,
+                    CON: 10,
+                    DEX: 10,
+                    WIS: 10,
+                    CHA: 10,
+                    INT: 10
+                },
+                background: "",
+                id: ""
+            };;
+            render(state);
         })
     }
     
@@ -204,11 +269,12 @@ const characterModule = (function() {
     };
 
     function renderCharacterPage(state) {
+        const properHeader = state.currentCharacter.id ? "Edit Your Character" : "Build a New Character";
         const buildForm = _generateCharacterForm(state);
         const characterPageContent = `
             <div class="page-container">
                 <header class="build-page-header" role="banner">
-                    <h1 id="js-build-page-header-text">Build a New Character</h1>
+                    <h1 id="js-build-page-header-text">${properHeader}</h1>
                 </header>
                 <div class="button-container">
                     <button class="randomize-button build-button" id="js-randomize-button">

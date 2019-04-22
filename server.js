@@ -80,6 +80,7 @@ function runServer(databaseUrl, port = PORT) {
 // use it in our integration tests later.
 function closeServer() {
   return mongoose.disconnect().then(() => {
+    // mongoose.connection.db.dropDatabase(); THIS IS DELETING THE PRODUCTION DATABASE
     return new Promise((resolve, reject) => {
       console.log('Closing server');
       server.close(err => {
@@ -97,5 +98,9 @@ function closeServer() {
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
 }
+
+process.on('unhandledRejection', error => {
+    console.log('unhandledRejection', error.message);
+});
 
 module.exports = { app, runServer, closeServer }

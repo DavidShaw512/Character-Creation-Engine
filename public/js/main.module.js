@@ -37,8 +37,8 @@ function render(currentState) {
 function main() {
     loginModule.initiate(render);
     signupModule.initiate(render);
-    navDrawerModule.initiate(render, STORE);
     characterModule.initiate(render);
+    navDrawerModule.initiate(render, STORE);
     render(STORE);
 }
 

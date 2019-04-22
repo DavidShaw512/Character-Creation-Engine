@@ -26,7 +26,7 @@ exports.postCharacter = (req, res) => {
             user: req.user.id
         })
         .then(character => {
-            console.log(character);
+            console.log("New character: ", character, " New character end");
             res.status(201).json(character.serialize());
         })
         .catch(error => {
@@ -94,7 +94,6 @@ exports.putCharacter = (req, res) => {
 
 
         })
-        // Work on this now
         .then(character => {
             console.log(req.body);
             res.status(200).send(character.serialize())
@@ -124,22 +123,4 @@ exports.deleteCharacter = (req, res) => {
             console.log(error);
             res.status(500).send("Something went wrong, dummy: " + error).json(error);
         })
-    
-    // User.findOne(req.user.id)
-    //     .then(user => {
-    //         return user.characters.filter(character => character._id === req.params.id);
-    //     })
-    //     .then(([character]) => {
-    //         if (!character) {
-    //             res.status(404).send("Character not found");
-    //         }
-    //         return Character.findByIdAndDelete(req.params.id);
-    //     })
-    //     .then(() => {
-    //         res.status(200).send("Character deleted");
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //         res.status(500).send("Something went wrong").json(err);
-    //     })
 };
