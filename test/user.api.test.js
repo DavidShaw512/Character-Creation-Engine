@@ -30,11 +30,9 @@ describe("User signup endpoint", function() {
     });
 
     beforeEach(function() {
-        console.log("Api/users test beforeEach console log :::::::::::::")
     });
 
     afterEach(function(done) {
-        console.log("Api/users test afterEach console log (delete character) :::::::::::")
         User.deleteOne({email})
             .then(() => done())
             .catch(done);

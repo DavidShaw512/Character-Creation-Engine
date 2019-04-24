@@ -30,35 +30,6 @@ exports.testAuth = (req, res) => {
     res.status(200);
 }
 
-// All the "User.findOne..." stuff is already included in the localAuth strategy, no need to re-write it here.
-// exports.userLogin = (req, res) => {
-//     User.findOne({ email: req.body.email })
-//         .then(user => {
-//             if (!user) {
-//                 res.status(401).json({
-//                     message: "Invalid credentials"
-//                 });
-//                 console.log("Invalid credentials");
-//                 alert("Invalid credentials");
-//                 return
-//             }
-//             // return User.validatePassword(user.password);
-//             bcrypt.compare(user.password, req.body.password, (err, result) => {
-//                 if (err) {
-//                     console.log("Invalid credentials: " + err);
-//                     res.send("Invalid credentials");
-//                 }
-//                 if (result) {
-//                     // pass 'remember me' to createAuthToken (req.body.rememberMe)
-//                     const authToken = createAuthToken(req.user.serialize(), rememberMe);
-//                     res.json(user, {authToken});
-//                     authModule.storeToken(authToken);
-//                     STORE.currentUser = user;
-//                 }
-//             });
-//         })
-// };
-
 exports.refreshToken = (req, res) => {
     const authToken = createAuthToken(req.user);
     res.json({authToken});
@@ -66,11 +37,9 @@ exports.refreshToken = (req, res) => {
 
 // Registering a new user:
 exports.newUserSignup = (req, res, next) => {
-    console.log("New user signup");
     // First, check for correct fields:
     const requiredFields = ["email", "password"];
     const missingField = requiredFields.find(field => !(field in req.body));
-    console.log("Missing field: ", missingField);
     if (missingField) {
         const newError = new Error("Validation error");
         newError.status = 422;
@@ -130,7 +99,6 @@ exports.newUserSignup = (req, res, next) => {
     // console.log(user);
 
     // Then look to see if the email is already taken
-    console.log("Check for user " + email);
     User.findOne({email})
         .then(user => {
             if (user) {

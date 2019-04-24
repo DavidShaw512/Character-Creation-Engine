@@ -15,8 +15,6 @@ exports.getAllCharacters = (req, res) => {
 };
 
 exports.postCharacter = (req, res) => {
-    console.log("Request user: ", req.user);
-    console.log("Request body: ", req.body)
     // push character into list of users' characters, save the user
     return Character.create({
             name: req.body.name || "",
@@ -26,7 +24,6 @@ exports.postCharacter = (req, res) => {
             user: req.user.id
         })
         .then(character => {
-            console.log("New character: ", character, " New character end");
             res.status(201).json(character.serialize());
         })
         .catch(error => {
@@ -68,7 +65,6 @@ exports.getCharacter = (req, res) => {
     //             : res.status(404).send("No such character");
     //     })
     //     .catch(error => {
-    //         console.log(error);
     //         res.status(500).send("Something went wrong").json(error)
     //     })
 };
@@ -77,8 +73,6 @@ exports.putCharacter = (req, res) => {
     // Write an 'ownsCharacter' middleware to use here
     Character.findById(req.params.id)
         .then(character => {
-            console.log(character);
-            console.log(req.params.id);
             if (!character) {
                 throw new Error();
             }
@@ -95,7 +89,6 @@ exports.putCharacter = (req, res) => {
 
         })
         .then(character => {
-            console.log(req.body);
             res.status(200).send(character.serialize())
         })
         .catch(error => {

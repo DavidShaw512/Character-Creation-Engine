@@ -63,8 +63,8 @@ const loginModule = (function() {
     function renderLoginPage(state) {
         const loginPageContent = `
             <div class="page-container">
-                <header role="banner">
-                        <h1>Character Creation Engine</h1>
+                <header class="login-page-header" role="banner">
+                        <h1><span class="fas fa-dice-d20"></span><br>Character Creation Engine</h1>
                 </header>
                 <div class="login-box" role="section">
                     <form id="login-form">
@@ -76,7 +76,7 @@ const loginModule = (function() {
                         You shall not pass! (Bad credentials)
                     </p>
                 </div>
-                <p class="new-user-link">New to us? <button id="js-new-user-link" style="border: 1px dotted">Sign up here</button></p>
+                <p class="new-user-link">New to us? <button class="signup-page-button" id="js-new-user-link">Sign up here</button></p>
             </div>
         `
     

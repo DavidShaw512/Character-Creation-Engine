@@ -33,11 +33,24 @@ const characterModule = (function() {
         return `
         <form class="build-form" id="js-build-form">
             <p class="build-paragraph">
-                Name: <input data-state="name" type="text" class="build-input text-input input-name" id="input-name" value="${state.currentCharacter.name}" placeholder="Leroy Jenkins"><br>
-                Race: <input data-state="attributes.race" type="text" class="build-input text-input input-race" id="input-race" value="${state.currentCharacter.attributes.race}" placeholder="Human"><br>
-                Class: <input data-state="attributes.charClass" type="text" class="build-input text-input input-class" id="input-charClass" value="${state.currentCharacter.attributes.charClass}" placeholder="Barbarian"><br>
-                Voice: <input data-state="attributes.accent" type="text" class="build-input text-input input-accent" id="input-accent" value="${state.currentCharacter.attributes.accent}" placeholder="Loud"><br>
-                Quirk: <input data-state="attributes.quirk" type="text" class="build-input text-input input-quirk" id="input-quirk" value="${state.currentCharacter.attributes.quirk}" placeholder="Is very impatient">
+                <div class="attrib-div">
+                    <label class="input-label" for="input-name">Name</label><br>
+                    <input data-state="name" type="text" label="Name" class="build-input text-input input-name" id="input-name" value="${state.currentCharacter.name}"><br>
+                </div>
+                <div class="attrib-div">
+                    <label class="input-label" for="input-race">Race</label><br>
+                    <input data-state="attributes.race" type="text" class="build-input text-input input-race" id="input-race" value="${state.currentCharacter.attributes.race}"><br>
+                </div>
+                <div class="attrib-div">
+                    <label class="input-label" for="input-charClass">Class</label><br>
+                    <input data-state="attributes.charClass" type="text" class="build-input text-input input-class" id="input-charClass" value="${state.currentCharacter.attributes.charClass}"><br>
+                </div>
+                <div class="attrib-div">
+                    <label class="input-label" for="input-accent">Voice</label><br>
+                    <input data-state="attributes.accent" type="text" class="build-input text-input input-accent" id="input-accent" value="${state.currentCharacter.attributes.accent}"><br>
+                </div>
+                <label class="input-label" for="input-quirk">Quirk</label><br>
+                <input data-state="attributes.quirk" type="text" class="build-input text-input input-quirk" id="input-quirk" value="${state.currentCharacter.attributes.quirk}">
                 <br>
                 <div class="stats">
                     <div class="stat">
@@ -65,7 +78,6 @@ const characterModule = (function() {
                         INT
                     </div> 
                 </div>
-                <br>
                 <strong>Background:</strong><br>
                 <textarea class="character-background-box build-input" id="input-background"></textarea>
             </p>
@@ -282,10 +294,9 @@ const characterModule = (function() {
                         Randomize
                     </button>
                     <button class="delete-button build-button" id="js-delete-button">
-                        <span class="fas fa-times"></span><br>
+                        <span class="fas fa-skull-crossbones"></span><br>
                         Delete
                     </button>
-                    <br>
                     <button class="save-button build-button" id="js-save-button">
                         <span class="fas fa-save"></span><br>
                         Save

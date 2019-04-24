@@ -27,10 +27,9 @@ describe("Auth endpoints", function() {
             .catch(done);
     });
 
-    afterEach(function(done) {
-        User.deleteOne({email})
-            .then(() => done())
-            .catch(done);
+    afterEach(function() {
+        return User.deleteOne({email})
+            
     });
 
     
@@ -41,10 +40,9 @@ describe("Auth endpoints", function() {
 
         });
     
-        afterEach(function(done) {
-            User.deleteOne({email})
-                .then(() => done())
-                .catch(done);
+        afterEach(function() {
+            return User.deleteOne({email})
+                
         });
 
         it("Should reject a signup request with no credentials", function() {

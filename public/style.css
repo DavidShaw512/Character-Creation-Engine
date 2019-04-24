@@ -4,10 +4,11 @@
 
 button {
     cursor: pointer;
+    transition: .2s;
 }
 
 body {
-    background-color: rgb(204, 171, 144);
+    background-color: rgb(202, 179, 160);
     margin: 0;
     padding-top: 0.1px;
     font-size: 18px;
@@ -28,18 +29,26 @@ header {
     text-align: center;
 }
 
+h1 {
+    font-size: 24px;
+}
+
 .login-box {
     background-color: rgb(163, 163, 163);
     text-align: center;
     padding: 20px;
     max-width: 500px;
     margin: 0 auto 0 auto;
+    background-image: url("/img/parchment-light.jpg");
+    box-shadow: 1px 2px 3px;
 }
 
 .login-field {
     font-size: 20px;
     border: none;
     margin: 3px;
+    border: 1px solid black;
+    padding-left: 5px;
 }
 
 .login-button {
@@ -50,6 +59,10 @@ header {
     margin-top: 5px;
 }
 
+.login-button:hover {
+    padding: 4px 40px;
+}
+
 .bad-credentials-message {
     text-align: center;
     color: #d40000;
@@ -58,9 +71,37 @@ header {
 
 .new-user-link {
     text-align: center;
+    margin-top: 5px;
+    
 }
 
-/* ABOVE: LANDING PAGE  */
+.signup-page-button {
+    border: none;
+    padding: 5px 20px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.507);
+    font-size: 16px;
+    transition: .2s;
+}
+
+.signup-page-button:hover {
+    background-color: white;
+    border-radius: 0px;
+
+}
+
+/* ABOVE: LOGIN PAGE  */
+/* BELOW: SIGN UP PAGE */
+
+.signup-button {
+
+}
+
+.login-return-button {
+
+}
+
+/* ABOVE: SIGN UP PAGE */
 /* BELOW: CHARACTER BUILD PAGE/NAV BAR */
 
 .nav {
@@ -102,32 +143,35 @@ header {
     position: relative;
 }
 
-.save-button {
+.build-button {
     border: none;
     border-radius: 50px;
+    background-color: white;
+    padding: 5px;
+}
+
+.build-button:hover {
+    border-left: 2px solid;
+    border-right: 2px solid;
+}
+
+.save-button {
     font-size: 16px;
     width: 100%;
     padding: 5px 0px;
     margin: 10px 0px 5px 0px;
-    background-color: #ffffff;
     right: 0;
     bottom: 0;
 }
 
 .randomize-button {
-    border: none;
-    border-radius: 50px;
     padding: 5px;
     width: 48%;
     margin-right: 1%;
     font-size: 16px;
-    background-color: #ffffff;
 }
 
 .delete-button {
-    background-color: #ffffff;
-    border: none;
-    border-radius: 50px;
     margin-left: 1%;
     font-size: 16px;
     padding: 5px;
@@ -135,11 +179,13 @@ header {
 }
 
 .build-box {
+    background-image: url("/img/parchment-light.jpg");
     max-width: 500px;
     padding: 20px 30px 10px 30px;
     background-color: rgb(202, 202, 202);
     /* border-radius: 20px; */
     margin: 0 auto 0 auto;
+    box-shadow: 1px 2px 3px;
 }
 
 .build-box-header {
@@ -155,13 +201,32 @@ header {
     margin-top: 5px;
 }
 
+.attrib-div {
+    width: 48%;
+    display: inline-block;
+}
+
+/* .attrib-div {
+    width: 100%;
+    display: inline-block;
+} */
+
 .text-input {
-    font-size: 16px;
-    background-color: #cacaca;
+    font-size: 14px;
+    padding: 8px;
+    margin-top: 0px;
+    margin-bottom: 7px;
+    background-color: #ffffff7d;
     border: none;
     border-bottom: 1px solid;
     text-align: center;
-    width: 69%;
+    width: 95%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.text-input:active {
+    border: 1px solid lightblue;
 }
 
 .stats {
@@ -181,12 +246,20 @@ header {
     width: 60%;
     font-size: 18px;
     text-align: center;
+    border: none;
+    border-right: 2px solid black;
+    border-bottom: 1px solid black;
+    border-bottom-right-radius: 50px;
+}
+
+.input-label {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.582);
 }
 
 .input-name {
-    margin-bottom: 15px;
-    font-size: 20px;
-    font-weight: 500;
+    border: 1px solid;
+    font-weight: 600;
 }
 
 .input-race {
@@ -210,6 +283,7 @@ header {
     height: 130px;
     overflow-y: auto;
     font-size: 16px;
+    background-color: #ffffff7d;
 }
 
 /* ABOVE: BUILD PAGE
@@ -222,7 +296,6 @@ BELOW: NAV DRAWER */
     z-index: 100;
     width: 250px;
     height: 100%;
-    padding: 15px;
     overflow-x: hidden;
     background-color: rgba(250, 235, 215, 0.959);
     box-shadow: 2px 2px 5px;
@@ -246,9 +319,15 @@ BELOW: NAV DRAWER */
     color: black;
 }
 
+.nav-header {
+    padding: 10px;
+    padding-top: 20px;
+    background-color: lightcoral;
+}
+
 .nav-drawer-user {
     margin-bottom: 10px;
-    margin-top: 10px;
+    margin-top: 7px;
 }
 
 .user-email {
@@ -256,35 +335,66 @@ BELOW: NAV DRAWER */
 }
 
 .logout-button {
+    border-radius: 50px;
+    border: none;
+    font-size: 14px;
+    padding: 5px 20px;
+    background-color: white;
+}
+
+.nav-drawer-characters {
+    padding: 0 15px;
+}
+
+.new-character-button {
+    font-size: 20px;
+    color: white;
+    background-color: #2b74ff;
     border: none;
     border-radius: 50px;
-    font-size: 18px;
-    font-weight: 900;
-    padding: 5px 20px;
+    padding: 10px 30px;
+    margin: 0 10px;
 }
 
 .character-list {
-    background-color: rgb(138, 138, 138);
     text-align: center;
     padding: 5px 0px;
-    margin-bottom: 0px;
+    margin: 0px;
 }
 
 .character-list-item {
     text-align: left;
-    background-color: #e6e6e6;
-    margin: 5px 1px;
-    padding: 8px;
+    border-bottom: 1px solid;
+    margin: 13px 0px;
+    padding: 0px 5px;
+    padding-bottom: 3px;
     width: 90%;
-    border: 3px solid slateblue;
-    border-radius: 10px;
     display: inline-block;
     position: relative;
+    right: 10px;
     cursor: pointer;
 }
 
 .character-list-item:hover {
-    border: 3px solid skyblue;
+    font-style: italic;
+    border-left: 2px solid;
+}
+
+.character-icon {
+    max-width: 32px;
+    float: left;
+    padding-top: 5px;
+    margin-right: 10px;
+}
+
+.character-name {
+    font-size: 16px;
+    font-weight: 550;
+}
+
+.character-description {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.562);
 }
 
 .character-edit-button {
@@ -307,12 +417,53 @@ BELOW: NAV DRAWER */
     border: none;
 }
 
-.new-character-button {
-    font-size: 20px;
-    color: white;
-    background-color: #2b74ff;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 30px;
-    margin: 10px;
+
+@media only screen and (min-width: 700px) {
+    h1 {
+        font-size: 35px;
+    }
+
+    .login-page-header {
+        margin-top: 100px;
+    }
+
+    .save-button {
+        border: none;
+        border-radius: 50px;
+        font-size: 16px;
+        width: 33%;
+        padding: 5px;
+        background-color: #ffffff;
+    }
+    
+    .randomize-button {
+        border: none;
+        border-radius: 50px;
+        padding: 5px;
+        width: 32%;
+        margin-right: 0;
+        font-size: 16px;
+        background-color: #ffffff;
+    }
+    
+    .delete-button {
+        background-color: #ffffff;
+        border: none;
+        border-radius: 50px;
+        font-size: 16px;
+        margin-left: 0px;
+        padding: 5px;
+        width: 32%;
+    }
+}
+
+
+@media only screen and (min-width: 900px) {
+    .page-container {
+        margin: 0px 0px 0px auto;
+    }
+
+    .login-page-header {
+        margin-top: 130px;
+    }
 }

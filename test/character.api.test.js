@@ -18,111 +18,143 @@ describe("Protected character endpoints", function() { // user deletion issue do
     const email = "email@characters.com";
     const password = "password";
 
+    const defaultCharacter = {
+        name: "Default Character",
+        attributes: {},
+        stats: {},
+        background: "Default background"
+    }
+
+    //FINISH TESTS - MOVE USER.CREATE/DELETE UP TO GLOBAL BEFORE/AFTER FUNCTIONS, AND CHARACTER CREATE/DELETE
+        // TO LOCAL BEFOREEACH/AFTEREACH FUNCTIONS
+    //CLEAN UP CODE
+    //OPEN A HELP TICKET IF NEEDED
+    //START ON A README DOCUMENT, LOOK UP EXAMPLES IN COURSE
+    //LOOK FOR FEEDBACK, USER TESTING
+    //MOVE "NEW CHARACTER" BUTTON ABOVE CHARACTER LIST
+    //MAKE CHARACTER CARDS SMALLER (LOOK AT MATERIAL.IO THING FOR LISTS)
+    //MORE PADDING IN TEXT FIELDS, UNIFORMITY IN SIZE (LOOK AT MATERIAL.IO THING FOR TEXT FIELDS)
 
     before(function() {
-        return runServer(TEST_DATABASE_URL);
+        return runServer(TEST_DATABASE_URL)
+            // .then(() => {
+                
+            // });
     });
 
     after(function() {
         mongoose.connection.db.dropDatabase();
-        return closeServer();
+        return closeServer()
+            // .then(() => {
+            //     return User.deleteMany({email})
+            // });
     });
 
     beforeEach(function() {
-        return User.hashPassword(password).then(password => {
-            User.create({
-                email,
-                password,
-                characters: []
-            });
-        });
     });
 
     afterEach(function() {
-        User.deleteOne({email})
-    })
+    });
 
     
 
     describe("/api/characters", function() {
+        before(function() {
+            return User.hashPassword(password).then(password => {
+                return User.create({
+                    email,
+                    password,
+                    characters: [],
+                });
+            })
+        });
 
+        after(function() {
+            return User.findOneAndDelete({email});
+        })
+
+        beforeEach(function() {
+            return User.findOne({email})
+                .then(user => {
+                    return Character.create({ ...defaultCharacter, user: user.id })
+                })         
+        })
+
+        afterEach(function() {
+            // return Character.findOne({name: defaultCharacter.name})
+            //     .then(char => {
+            //         console.log("AFTEREACH Character found for deletion, should have been made in beforeEach ::::", char)
+                    return Character.deleteOne({name: defaultCharacter.name})
+                // })
+        });
+
+        function getToken() {
+            const token = jwt.sign(
+                {
+                    user: {
+                        email,
+                        password
+                    }
+                },
+                JWT_SECRET,
+                {
+                    algorithm: "HS256",
+                    subject: email,
+                    expiresIn: "7d"
+                }
+            );
+            return token;
+        }
+        
 
         it("Should reject characters request with no credentials", function() {
             return chai.request(app)
                 .get("/api/characters")
                 .then(res => {
                     expect(res).to.have.status(401);
-                    console.log("##### Api/characters response body:", res.body);
                 })
         });
 
         it("Should GET all characters", function() {
-            const token = jwt.sign(
-                {
-                    user: {
-                        email,
-                        password
-                    }
-                },
-                JWT_SECRET,
-                {
-                    algorithm: "HS256",
-                    subject: email,
-                    expiresIn: "7d"
-                }
-            );
+            const token = getToken();
+
+            const getTestCharacter = {
+                name: "GET test character",
+                attributes: {},
+                stats: {},
+                background: "None, gonna be deleted"
+            };
+
+            Character.create({getTestCharacter});
 
             return chai.request(app)
                 .get("/api/characters/")
                 .set("authorization", `Bearer ${token}`)
                 .then(res => {
                     expect(res).to.have.status(200);
-                    console.log("**** Api/characters get test response body: ", res.body)
-                    expect(res.body.characters).to.be.a("Array")
-                    // expect(res.body).to.have.lengthOf(1);
+                    console.log(res.body);
+                    expect(res.body.characters).to.be.a("Array");
+                    expect(res.body.characters).to.have.lengthOf(1);
                 })
-            // return chai.request(app)
-            //     .post("/auth/login")
-            //     .send({ email, password })
-            //     .then(() => {
-            //         return chai.request(app)
-            //     })
+                .then(() => {
+                    return Character.deleteOne({name: getTestCharacter.name})
+                })
         });
 
         it("Should create a new character", function() {
-            const token = jwt.sign(
-                {
-                    user: {
-                        email,
-                        password
-                    }
-                },
-                JWT_SECRET,
-                {
-                    algorithm: "HS256",
-                    subject: email,
-                    expiresIn: "7d"
-                }
-            );
-
-            // const sampleCharacter = {
-            //     name: "Sample Character",
-            //     attributes: {},
-            //     stats: {},
-            //     background: "No background"
-            // }
+            const token = getToken();
 
             let user;
+            let characterName = "Sample Character";
 
             return User.findOne({ email: "email@characters.com" })
                 .then(_user => {
                     user = _user;
-                    console.log("||||| Found this user: ", user.id)
                     return chai.request(app)
                     .post("/api/characters/")
                     .set("authorization", `Bearer ${token}`)
                     .send({
-                        name: "Sample Character",
+                        name: characterName,
                         attributes: {},
                         stats: {},
                         background: "A very interesting background",
@@ -130,47 +162,61 @@ describe("Protected character endpoints", function() { // user deletion issue do
                     })
                     .then(res => {
                         expect(res).to.have.status(201);
-                        console.log("**** Api/characters POST test response body: ", res.body)
-                        // expect(res.body).to.be.a("Array")
-                        // expect(res.body).to.have.lengthOf(1);
+                        return Character.findOneAndDelete({ name: characterName });
                     })
                 }) 
         });
 
-        // it("Should PUT(update) a character", function() {
+        it("Should PUT(update) a character", function() {
+            const token = getToken();
+            const updates = {
+                background: "A less interesting background"
+            };
 
-        // })
+            return Character.findOne({ name: defaultCharacter.name })
+                .then(char => {
+                    return chai.request(app)
+                        .put(`api/characters/${char.id}`)
+                        .set("authorization", `Bearer ${token}`)
+                        .send(updates)
+                        .then(res => {
+                            console.log(".....PUT test response body    ::::::::", res.body)
+                            expect(res).to.have.status(200);
+                        })
+                        
+                })
+        })
 
         it("Should DELETE a character", function() {
-            const token = jwt.sign(
-                {
-                    user: {
-                        email,
-                        password
-                    }
-                },
-                JWT_SECRET,
-                {
-                    algorithm: "HS256",
-                    subject: email,
-                    expiresIn: "7d"
-                }
-            );
+            const token = getToken();
 
+            // const deleteTestCharacter = {
+            //     name: "Delete tester",
+            //     attributes: {},
+            //     stats: {},
+            //     background: "Gonna get deleted"
+            // };
+
+            // Character.create({deleteTestCharacter});
+
+            let char;
           
-            return Character.findOne({ name: "Sample Character" })
-                .then(char => {
-                    console.log("::::::::    This character should have been found   :::::::", char)
+            return Character.findOne({ name: defaultCharacter.name })
+                .then(_char => {
+                    char = _char;
+                    console.log("DELETE test character found    :::::::", char.id);
                     return chai.request(app)
                         .delete(`/api/characters/${char.id}`)
                         .set("authorization", `Bearer ${token}`)
                         .then(res => {
                             expect(res).to.have.status(204);
-                            console.log("**** Api/characters DELETE test response body: ", res.body)
-                        //     return Character.findById(char.id)
-                        // })
-                        // .then(_char => {
-                        //     should.not.exist(_char);
+                            return Character.findById(char.id)
+                        })
+                        .then(char => {
+                            should.not.exist(char);
+                        })
+                        .then(() => {
+                            return Character.deleteOne({name: defaultCharacter.name})
                         })
                 })
 

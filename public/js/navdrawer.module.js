@@ -46,13 +46,12 @@ const navDrawerModule = (function() {
     }
 
     function _generateCharacterList(state) {
-        console.log("Current user: " + state.currentUser);
+        console.log("Current users characters: " + state.currentUser.characters);
         return state.currentUser.characters.map(character => {
-            console.log(character, character.name);
             return `<li class="character-list-item" data-id="${character._id || character.id}">
-                ${character.name} the 
-                ${character.attributes.race} 
-                ${character.attributes.charClass}
+                <img class="character-icon" src="../img/${character.attributes.charClass}.png">
+                <span class="character-name">${character.name}</span><br> 
+                <span class="character-description">${character.attributes.race} ${character.attributes.charClass}</span>
                 </li>`
         })
         .join("")
@@ -113,7 +112,6 @@ const navDrawerModule = (function() {
             console.log("Nav Drawer should close");
             apiModule.postCharacter(blankCharacter)
                 .then(blankCharacter => {
-                    // Use a helper function to randomize the new blank character
                     state.currentCharacter = blankCharacter;
                     state.currentUser.characters = [...state.currentUser.characters, blankCharacter]
                     commonModule.randomizeCharacter(state);
@@ -172,18 +170,20 @@ const navDrawerModule = (function() {
         const position = state.navDrawerOpen ? 0 : -260;
         const navDrawerContent = `
             <div class="nav-drawer" style="left: ${position}px" id="js-nav-drawer">
-                <button class="drawer-close-button" id="js-drawer-close-button"><span class="fas fa-times"></span></button>
-                <h2 class="nav-drawer-user" id="js-nav-drawer-user">Logged in:<br>
-                <span class="user-email">${userEmail}</span></h2>
-                <button class="logout-button" id="js-logout-button">Logout <span class="fas fa-door-open"></span></button>
-                <hr>
-                <h3>My characters:</h3>
+                <div class="nav-header">
+                    <button class="drawer-close-button" id="js-drawer-close-button"><span class="fas fa-times"></span></button>
+                    <p class="nav-drawer-user" id="js-nav-drawer-user">Logged in:<br>
+                    <span class="user-email">${userEmail}</span> <button class="logout-button" id="js-logout-button"><span class="fas fa-door-open"></span> <span class="fas fa-arrow-left"></span></button>
+                    </p>
+                </div>
+                
                 <section role="region" class="nav-drawer-characters" id="js-nav-drawer-characters">
+                    <h3>My characters:</h3>
+                    <button class="new-character-button" id="js-new-character-button">New Character</button>
                     <ul class="character-list" id="js-character-list">
                         ${characterList}
                     </ul>
                 </section>
-                <button class="new-character-button" id="js-new-character-button">New Character</button>
             </div>
         `;
 
