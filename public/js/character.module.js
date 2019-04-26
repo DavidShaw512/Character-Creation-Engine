@@ -33,22 +33,22 @@ const characterModule = (function() {
         return `
         <form class="build-form" id="js-build-form">
             <p class="build-paragraph">
-                <div class="attrib-div">
-                    <label class="input-label" for="input-name">Name</label><br>
-                    <input data-state="name" type="text" label="Name" class="build-input text-input input-name" id="input-name" value="${state.currentCharacter.name}"><br>
-                </div>
+                
+                <label class="input-label" for="input-name">Name</label><br>
+                <input data-state="name" type="text" label="Name" class="build-input text-input input-name" id="input-name" value="${state.currentCharacter.name}"><br>
+                
                 <div class="attrib-div">
                     <label class="input-label" for="input-race">Race</label><br>
                     <input data-state="attributes.race" type="text" class="build-input text-input input-race" id="input-race" value="${state.currentCharacter.attributes.race}"><br>
                 </div>
-                <div class="attrib-div">
+                <div class="attrib-div class-div">
                     <label class="input-label" for="input-charClass">Class</label><br>
                     <input data-state="attributes.charClass" type="text" class="build-input text-input input-class" id="input-charClass" value="${state.currentCharacter.attributes.charClass}"><br>
                 </div>
-                <div class="attrib-div">
-                    <label class="input-label" for="input-accent">Voice</label><br>
-                    <input data-state="attributes.accent" type="text" class="build-input text-input input-accent" id="input-accent" value="${state.currentCharacter.attributes.accent}"><br>
-                </div>
+                
+                <label class="input-label" for="input-accent">Voice</label><br>
+                <input data-state="attributes.accent" type="text" class="build-input text-input input-accent" id="input-accent" value="${state.currentCharacter.attributes.accent}"><br>
+                
                 <label class="input-label" for="input-quirk">Quirk</label><br>
                 <input data-state="attributes.quirk" type="text" class="build-input text-input input-quirk" id="input-quirk" value="${state.currentCharacter.attributes.quirk}">
                 <br>
@@ -78,111 +78,37 @@ const characterModule = (function() {
                         INT
                     </div> 
                 </div>
-                <strong>Background:</strong><br>
-                <textarea class="character-background-box build-input" id="input-background"></textarea>
+                <label for="input-background" class="input-label">Background</label><br>
+                <textarea data-state="background" class="character-background-box build-input" id="input-background">${state.currentCharacter.background}</textarea>
             </p>
         </form>
         `
     };
-
-    
-    
-    function _randomize(arr) {
-        const randomIndex = (Math.floor(Math.random() * arr.length));
-        return arr[randomIndex];
-
-        // Possible feature: user customizes the randomizable features and attributes
-    }
-
-    // this function will call to the API to retrieve the default randomizable attributes
-    function _randomizeAttributes(state) {
-        const name = document.getElementById("input-name");
-        const race = document.getElementById("input-race");
-        const charClass = document.getElementById("input-charClass");
-        const accent = document.getElementById("input-accent");
-        const quirk = document.getElementById("input-quirk");
-
-        // name.value = _randomize(randomNames);
-        // race.value = _randomize(randomRaces);
-        // charClass.value = _randomize(randomClasses);
-        // accent.value = _randomize(randomVoices);
-        // quirk.value = _randomize(randomQuirks);
-        // mar 6 comment
-        state.currentCharacter.name = _randomize(randomNames);
-        state.currentCharacter.attributes.race = _randomize(randomRaces);
-        state.currentCharacter.attributes.charClass = _randomize(randomClasses);
-        state.currentCharacter.attributes.accent = _randomize(randomVoices);
-        state.currentCharacter.attributes.quirk = _randomize(randomQuirks);
-
-        name.value = state.currentCharacter.name;
-        race.value = state.currentCharacter.attributes.race;
-        charClass.value = state.currentCharacter.attributes.charClass;
-        accent.value = state.currentCharacter.attributes.accent;
-        quirk.value = state.currentCharacter.attributes.quirk;
-        // mar 6 comment
-
-        // reassign all these to put them into the state, then call Render
-        // Find a way to populate the state.currentCharacter with the value
-        // in the field, so that it saves custom inputs instead of just
-        // randomized inputs
-        
-        // const attributes = document.getElementsByClassName("build-input");
-
-    }
-
-    function _randomizeStatNumber() {
-        return Math.floor(Math.random() * 6) * 3 + 3;
-    }
-    
-    function _randomizeAllStats(state) {
-        
-        const statFields = state.currentCharacter.stats;
-        statFields.STR = _randomizeStatNumber();
-        statFields.CON = _randomizeStatNumber();
-        statFields.DEX = _randomizeStatNumber();
-        statFields.WIS = _randomizeStatNumber();
-        statFields.CHA = _randomizeStatNumber();
-        statFields.INT = _randomizeStatNumber();
-        console.log(statFields);
-    }
-    
-    // Problem (SOLVED): the stats aren't populating because they were formerly part of the DOM, but now they're
-    // part of the STORE and they're not being populated from it. (the store object's key-value pairs need
-    // to update when the randomizeAllStats function fires)
-
-    // Two-way data binding: when the State changes, the Value changes, and when the Value changes, the State changes
-
-    // Problem: When saving a character, if there has been any custom input on the form, the character will be
-    // saved properly but the custom field will revert back to it's pre-custom input (either empty or random).
-    // Need to find a way to keep the custom value in the field after saving
 
     function _randomizeCharacter(state) {
         // Think about moving this out of here and into common, so it's a helper function that can be called anywhere
         $("#js-randomize-button").on("click", event => {
             event.preventDefault;
             commonModule.randomizeCharacter(state);
-            // _randomizeAllStats(state);
-            // _randomizeAttributes(state);
             render(state);
         });
     }
 
     function _customizeCharacter(state) {
-        $("input").change(function() {
-            console.log(this);
+        $("input, textarea").change(function() {
             const path = $(this).attr("data-state").split(".");
-            console.log(path);
+            console.log("Customize character function - this: ", this);
             if (path.length === 1) {
                 state.currentCharacter[path[0]] = $(this).val();
             } else {
                 state.currentCharacter[path[0]][path[1]] = $(this).val();
             };
-            console.log(state);
         })
     }
 
     // this will PUT the character - POST new characters will be taken care of by the NavDrawer "New Char" button.
     // If id exists on character, use PUT - if no Id exists, use POST
+    // After saving, don't clear the current character - instead, keep the same character pulled up for further edits
     // Use the thinkful resources, ask people on slack
     function _saveCharacter(state) {
         $("#js-save-button").click(event => {
@@ -197,33 +123,21 @@ const characterModule = (function() {
                             return (char.id || char._id) === newCharacter.id ? {...char, ...newCharacter} : char
                         })
                     })
+                    .then(() => {
+                        render(state);
+                    })
             } else {
                 apiModule.postCharacter(newCharacter)
                     .then(response => {
-                        console.log(response);
+                        console.log("Save - Post new character response: ", response);
                         state.currentUser.characters = [...state.currentUser.characters, response];
+                        state.currentCharacter = response;
+                        render(state);
                     })
+
             }
             // DELETE will be similar, but use filter instead of map:
             // .filter(char => char.id !== newCharacter.id)
-            state.currentCharacter = {
-                name: "",
-                attributes: {
-                    race: "",
-                    charClass: "",
-                    accent: "",
-                    quirk: ""
-                },
-                stats: {
-                    STR: 10,
-                    CON: 10,
-                    DEX: 10,
-                    WIS: 10,
-                    CHA: 10,
-                    INT: 10
-                },
-                background: "",
-            };
             alert("Character Saved!");
             render(state);  
         })
@@ -241,7 +155,6 @@ const characterModule = (function() {
                 .then(response => {
                     console.log("Response from apiModule.deleteCharacter: " + response);
                     // state.currentCharacter = blankCharacter;
-                    document.getElementById("js-build-form").reset();
                     // render(state);
                     
                 });
@@ -266,7 +179,7 @@ const characterModule = (function() {
                 },
                 background: "",
                 id: ""
-            };;
+            };
             render(state);
         })
     }
@@ -282,11 +195,13 @@ const characterModule = (function() {
 
     function renderCharacterPage(state) {
         const properHeader = state.currentCharacter.id ? "Edit Your Character" : "Build a New Character";
+        const headerImage = state.currentCharacter.attributes.charClass;
         const buildForm = _generateCharacterForm(state);
         const characterPageContent = `
             <div class="page-container">
                 <header class="build-page-header" role="banner">
-                    <h1 id="js-build-page-header-text">${properHeader}</h1>
+                    <h1 id="js-build-page-header-text"><img src="../img/${headerImage || "d20"}.png" class="build-logo"><br>
+                    ${properHeader}</h1>
                 </header>
                 <div class="button-container">
                     <button class="randomize-button build-button" id="js-randomize-button">

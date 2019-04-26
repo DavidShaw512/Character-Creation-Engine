@@ -103,10 +103,10 @@ exports.deleteCharacter = (req, res) => {
         .then(character => {
             if (!character) {
                 res.status(404).send("No such user, you dummy")
-            };
-            if (character.user._id.toString() !== req.user.id) {
+            } else if (character.user._id.toString() !== req.user.id) {
                 res.status(401).send("ACCESS DENIED, DUMMY")
             }
+            // ABOVE: DELETE HELP FROM SLACK, CHANGED FROM "IF" TO "ELSE IF" - UNDO TO GET RID OF IT
             return Character.findByIdAndDelete(req.params.id);
         })
         .then(() => {

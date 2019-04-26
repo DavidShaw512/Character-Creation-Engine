@@ -62,11 +62,15 @@ const loginModule = (function() {
 
     function renderLoginPage(state) {
         const loginPageContent = `
-            <div class="page-container">
-                <header class="login-page-header" role="banner">
-                        <h1><span class="fas fa-dice-d20"></span><br>Character Creation Engine</h1>
+            <div class="auth-container">
+                <header class="auth-header" role="banner">
+                        <h1>
+                            <img class="main-logo" src="../img/d20-icons-circle.png"><br>
+                            <span class="red">C</span>haracter <span class="red">C</span>reation <span class="red">E</span>ngine
+                        </h1>
                 </header>
                 <div class="login-box" role="section">
+                    <p class="new-user-message hidden" id="js-new-user-message">Now log in with your new credentials!</p>
                     <form id="login-form">
                         <input type="email" class="login-field" id="js-email" placeholder="Email"><br>
                         <input type="password" class="login-field" id="js-password" placeholder="Password"><br>
@@ -76,7 +80,7 @@ const loginModule = (function() {
                         You shall not pass! (Bad credentials)
                     </p>
                 </div>
-                <p class="new-user-link">New to us? <button class="signup-page-button" id="js-new-user-link">Sign up here</button></p>
+                <a class="new-user-link" id="js-new-user-link">New user signup</a>
             </div>
         `
     

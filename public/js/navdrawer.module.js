@@ -25,25 +25,7 @@ const navDrawerModule = (function() {
             INT: "10"
         },
         background: "",
-    }
-
-    // function _getUser() {
-    //     return apiModule.getUser();
-    // }
-
-    // This function grabs a character from the (already populated) store/state
-    // function _getCharacter(state) {
-    //     $(".character-list-item").click(function(event) {
-    //         event.preventDefault();
-    //         return apiModule.getCharacter(state);
-    //     })
-        
-    // }
-
-    function _getCharacters() {
-        
-        return apiModule.getCharacters();
-    }
+    };
 
     function _generateCharacterList(state) {
         console.log("Current users characters: " + state.currentUser.characters);
@@ -75,18 +57,6 @@ const navDrawerModule = (function() {
         })
     };
 
-    // function _deleteCharacter(state) {
-    //     $(".character-delete-button").click(event => {
-    //         event.preventDefault;
-    //         const id = $(this).closest("<li>");
-    //         console.log(id);
-    //         // apiModule.deleteCharacter(id)
-    //         //     .then(response => {
-    //         //         state.currentUser.characters.filter(char => char.id !== newCharacter.)
-    //         //     })
-    //     })
-    // }
-
     function _logout(state) {
         $('#js-logout-button').click(event => {
             event.preventDefault();
@@ -99,10 +69,6 @@ const navDrawerModule = (function() {
         });
     }
 
-    function _postCharacter(character) {
-        return apiModule.postCharacter(character);
-    };
-
     function _clickNewCharacter(state) {
         
         $("#js-new-character-button").click(event => {
@@ -110,11 +76,28 @@ const navDrawerModule = (function() {
             console.log("New Character clicked");
             state.navDrawerOpen = false;
             console.log("Nav Drawer should close");
-            apiModule.postCharacter(blankCharacter)
-                .then(blankCharacter => {
-                    state.currentCharacter = blankCharacter;
-                    state.currentUser.characters = [...state.currentUser.characters, blankCharacter]
-                    commonModule.randomizeCharacter(state);
+            apiModule.postCharacter({
+                name: commonModule._randomize(randomNames),
+                attributes: {
+                    race: commonModule._randomize(randomRaces),
+                    charClass: commonModule._randomize(randomClasses),
+                    accent: commonModule._randomize(randomVoices),
+                    quirk: commonModule._randomize(randomQuirks)
+                },
+                stats: {
+                    STR: commonModule._randomizeStatNumber(),
+                    CON: commonModule._randomizeStatNumber(),
+                    DEX: commonModule._randomizeStatNumber(),
+                    WIS: commonModule._randomizeStatNumber(),
+                    CHA: commonModule._randomizeStatNumber(),
+                    INT: commonModule._randomizeStatNumber()
+                },
+                background: commonModule._randomize(randomBackgrounds)
+            })
+                .then(randomCharacter => {
+                    state.currentCharacter = randomCharacter;
+                    state.currentUser.characters = [...state.currentUser.characters, randomCharacter]
+                    // commonModule.randomizeCharacter(state);
                     _render(state);
                 })
                 .catch(error => {
@@ -133,9 +116,10 @@ const navDrawerModule = (function() {
     function _close(state) {
         $(".drawer-close-button").click(function(event) {
             event.preventDefault;
-            state.navDrawerOpen = false;
+            // state.navDrawerOpen = false;
+            $("#js-nav-drawer").addClass("drawer-closed-on-mobile");
             console.log("closing nav drawer");
-            _render(state)
+            // _render(state)
         });
     };
 
@@ -167,20 +151,25 @@ const navDrawerModule = (function() {
     function renderNavDrawer(state) {
         const userEmail = state.currentUser.email;
         const characterList = _generateCharacterList(state);
-        const position = state.navDrawerOpen ? 0 : -260;
+        // const position = state.navDrawerOpen ? 0 : -260;    this goes in nav drawer below: style="left: ${position}px"
         const navDrawerContent = `
-            <div class="nav-drawer" style="left: ${position}px" id="js-nav-drawer">
+            <div class="nav-drawer drawer-closed-on-mobile" id="js-nav-drawer">
                 <div class="nav-header">
                     <button class="drawer-close-button" id="js-drawer-close-button"><span class="fas fa-times"></span></button>
-                    <p class="nav-drawer-user" id="js-nav-drawer-user">Logged in:<br>
-                    <span class="user-email">${userEmail}</span> <button class="logout-button" id="js-logout-button"><span class="fas fa-door-open"></span> <span class="fas fa-arrow-left"></span></button>
+                    <p class="nav-drawer-user" id="js-nav-drawer-user">
+                    <span class="user-email">${userEmail}</span> <br class="logout-linebreak">
+                    <button class="logout-button" id="js-logout-button"><span class="fas fa-door-open"></span> <span class="fas fa-arrow-left"></span></button>
                     </p>
                 </div>
                 
                 <section role="region" class="nav-drawer-characters" id="js-nav-drawer-characters">
-                    <h3>My characters:</h3>
-                    <button class="new-character-button" id="js-new-character-button">New Character</button>
+                    <h3 class="my-characters">My characters:</h3>
                     <ul class="character-list" id="js-character-list">
+                        <li class="character-list-item" id="js-new-character-button">
+                            <img class="character-icon" src="../img/d20.png">
+                            <span class="new-character">New Character</span><br> 
+                            <span class="character-description"> Make a new character!</span>
+                        </li>
                         ${characterList}
                     </ul>
                 </section>

@@ -31,7 +31,8 @@ const commonModule = (function() {
     function _openNavDrawer(state) {
         $(".nav-drawer-button").click(function(event) {
             event.preventDefault;
-            navDrawerModule.open(state);
+            $("#js-nav-drawer").removeClass("drawer-closed-on-mobile");
+            // navDrawerModule.open(state);
         });
     }
 
@@ -44,7 +45,8 @@ const commonModule = (function() {
         
         $(".nav-drawer-button").click(function(event) {
             event.preventDefault;
-            _openNavDrawer(state);
+            // _openNavDrawer(state);
+            $("#js-nav-drawer").removeClass("drawer-closed-on-mobile");
         })
 
         return `
@@ -81,6 +83,7 @@ const commonModule = (function() {
         const charClass = document.getElementById("input-charClass");
         const accent = document.getElementById("input-accent");
         const quirk = document.getElementById("input-quirk");
+        const background = document.getElementById("input-background");
 
         // name.value = _randomize(randomNames);
         // race.value = _randomize(randomRaces);
@@ -93,12 +96,14 @@ const commonModule = (function() {
         state.currentCharacter.attributes.charClass = _randomize(randomClasses);
         state.currentCharacter.attributes.accent = _randomize(randomVoices);
         state.currentCharacter.attributes.quirk = _randomize(randomQuirks);
+        state.currentCharacter.background = _randomize(randomBackgrounds);
 
         name.value = state.currentCharacter.name;
         race.value = state.currentCharacter.attributes.race;
         charClass.value = state.currentCharacter.attributes.charClass;
         accent.value = state.currentCharacter.attributes.accent;
         quirk.value = state.currentCharacter.attributes.quirk;
+        background.innerHTML = state.currentCharacter.background;
     }
 
     function _randomizeStatNumber() {
@@ -126,6 +131,8 @@ const commonModule = (function() {
         renderLayoutNav,
         renderLayoutNoNav,
         randomizeCharacter,
+        _randomize,
+        _randomizeStatNumber,
         blankCharacter
     }
 })();

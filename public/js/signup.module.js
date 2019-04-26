@@ -9,8 +9,8 @@ const signupModule = (function() {
     function _renderForm() {
         return `
             <form>
-                <input type="email" class="signup-field" id="js-signup-email" placeholder="Email"><br>
-                <input type="password" class="signup-field" id="js-signup-password" placeholder="Password"><br>
+                <input type="email" class="login-field" id="js-signup-email" placeholder="Email"><br>
+                <input type="password" class="login-field" id="js-signup-password" placeholder="Password"><br>
                 <button class="signup-button" id="js-signup-button">Sign Up</button>
             </form>
         `;
@@ -27,6 +27,7 @@ const signupModule = (function() {
                 .then(() => {
                     state.currentPage = "login";
                     render(state);
+                    $("#js-new-user-message").removeClass("hidden");
                 })
                 .catch(err => {
 
@@ -66,13 +67,15 @@ const signupModule = (function() {
     function renderSignupPage(state) {
         const signupForm = _renderForm();
         const signupPageContent = `
-            <div class="page-container">
-                <header role="banner">
+            <div class="auth-container">
+                <header class="auth-header" role="banner">
                         <h1>Create New User</h1>
                 </header>
                 <div class="login-box" role="section">
+                    <p class="signup-message">After a successful signup, you'll be taken back to the login page where 
+                    you may log in with your new credentials</p>
                     ${signupForm}
-                    <button class="login-return-button" id="js-login-return-button">Back to Login Screen</button>
+                    <button class="signup-button" id="js-login-return-button">Back to Login Screen</button>
                 </div>
                 
             </div>

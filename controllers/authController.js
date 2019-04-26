@@ -69,7 +69,7 @@ exports.newUserSignup = (req, res, next) => {
             min: 6
         },
         password: {
-            min: 6,
+            min: 4,
             max: 72
         }
     };
