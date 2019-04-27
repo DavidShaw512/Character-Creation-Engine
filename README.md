@@ -9,13 +9,27 @@ link
 
 ### Screenshots
 
-screenshots
+Title/login screen:
+
+![Login page](public/img/screenshots/Login.png)
+
+New User Signup screen:
+
+![Signup page](public/img/screenshots/Signup.png)
+
+Character Build screen:
+
+![Character Build page](public/img/screenshots/Build.png)
+
+Full Character Options Sheet:
+
+![Character Sheet](public/img/screenshots/Sheet.png)
 
 ### Built With
 
-HTML
-CSS
-JavaScript
-jQuery
-Node.js
-Express
+- HTML
+- CSS
+- JavaScript
+- jQuery
+- Node.js
+- Express

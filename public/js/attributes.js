@@ -3,7 +3,7 @@ const randomNames = ["Tom", "Marie", "Ben", "Salim", "Yasha", "Wilbur", "Phil", 
 
 const randomRaces = ["Human", "Elf", "Half-orc", "Half-elf", "Halfling", "Dwarf", "Tiefling", "Gnome", "Dragonborn"];
 
-const randomClasses = ["Fighter", "Ranger", "Wizard", "Barbarian", "Paladin", "Warlock", "Monk", "Rogue", "Sorcerer", "Druid", "Cleric"];
+const randomClasses = ["Fighter", "Ranger", "Wizard", "Barbarian", "Paladin", "Bard", "Warlock", "Monk", "Rogue", "Sorcerer", "Druid", "Cleric"];
 
 const randomVoices = ["Posh British", "Chav British", "Boston", "Spanish", "French", "German", "Cajun", "Transatlantic", "Eastern European", "Southern Drawl", "Canadian", "Beach Bum", "Foghorn Leghorn", "Lisp", "Irish", "Scottish"];
 
