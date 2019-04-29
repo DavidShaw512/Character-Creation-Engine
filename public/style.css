@@ -63,6 +63,29 @@ h2, h3, h4, h5 {
     font-family: 'Cinzel', serif;
 }
 
+.landing-button {
+    padding: 8px 80px;
+    border: none;
+    font-size: 20px;
+    border-radius: 50px;
+}
+
+.landing-button:hover {
+    padding: 8px 110px;
+}
+
+.landing-login-button {
+    color: white;
+    background-color: #6f1515;
+    margin-bottom: 20px;
+}
+
+.landing-signup-button {
+    background-color: white;
+    color: #6f1515;
+    border: 2px solid;
+}
+
 .login-box {
     background-color: rgb(163, 163, 163);
     text-align: center;
@@ -89,7 +112,7 @@ h2, h3, h4, h5 {
     border: none;
     border-radius: 30px;
     padding: 4px 30px;
-    margin-top: 5px;
+    margin-top: 15px;
     background-color: rgb(111, 21, 21);
     color: white;
 }
@@ -177,6 +200,24 @@ h2, h3, h4, h5 {
     padding: 8px 20px;
     background-color: white;
     margin: 10px 15px;
+}
+
+.popup-window {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.delete-popup {
+    z-index: 100;
+    position: relative;
+    background: #ffffffe0;
+    border: 3px solid red;
+    border-radius: 10px;
+    max-width: 50%;
+    margin: 0 auto;
+    top: -12px;
+    box-shadow: 3px 7px 10px;
 }
 
 .build-page-header {
@@ -526,6 +567,10 @@ BELOW: NAV DRAWER */
 
 
 @media only screen and (min-width: 900px) {
+    .main-logo {
+        min-width: 30%;
+    }
+
     .page-container {
         margin: 0px 0px 0px auto;
         min-width: 70%;

@@ -33,10 +33,12 @@ authRouter.route("/refresh")
 // [x] Make an endpoint called auth/signup that you'd post a new user to
 // [/] Make sure you understand how jwt auth flow works
 
-const createAuthToken = function(user) {
+const createAuthToken = function(user, rememberMe) {
   return jwt.sign({user}, config.JWT_SECRET, {
     subject: user.email,
-    expiresIn: config.JWT_EXPIRY,
+    expiresIn: rememberMe 
+        ? '30d' 
+        : config.JWT_EXPIRY,
     algorithm: 'HS256'
   });
 };
@@ -46,9 +48,9 @@ const localAuth = passport.authenticate('local', {session: false});
 // The user provides a email and password to login
 authRouter.post('/login', localAuth, (req, res) => {
   console.log("Authrouter.post to login endpoint");
-  console.log(req.user);
+  console.log(req.body.rememberMe);
   const user = req.user;
-  const authToken = createAuthToken(req.user.serialize());
+  const authToken = createAuthToken(req.user.serialize(), req.body.rememberMe);
   res.json({user, authToken});
 });
 

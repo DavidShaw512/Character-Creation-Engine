@@ -3,8 +3,8 @@ function render(currentState) {
     // check here if there is a token, if there is you can bypass login and go straight to character page
     // check in the store, if token is there redirect to character page
     switch(currentState.currentPage) {
-        case "login":
-            console.log("Rendering login page");
+        case "landing":
+            console.log("Rendering landing page");
             // use auth module to get token
             const token = authModule.getToken();
             if (token) {
@@ -15,13 +15,17 @@ function render(currentState) {
                         render(currentState);
                     })
                     .catch(error => {
-                        currentState.currentPage = "login";
+                        currentState.currentPage = "landing";
                         render(currentState);
                     })
             } else {
-                currentState.currentPage = "login";
-                loginModule.render(currentState);
+                currentState.currentPage = "landing";
+                landingModule.render(currentState);
             }
+            break;
+        case "login":
+            console.log("Rendering login page");
+            loginModule.render(currentState);
             break;
         case "signup":
             console.log("Rendering signup page");

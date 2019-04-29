@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "DnD character randomizer capstone",
   "main": "server.js",
+  "engines": {
+    "node": "10.15.3"
+  },
   "dependencies": {
     "bcrypt": "^3.0.5",
     "bcryptjs": "^2.4.3",

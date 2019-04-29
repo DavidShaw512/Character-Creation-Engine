@@ -28,7 +28,6 @@ const navDrawerModule = (function() {
     };
 
     function _generateCharacterList(state) {
-        console.log("Current users characters: " + state.currentUser.characters);
         return state.currentUser.characters.map(character => {
             return `<li class="character-list-item" data-id="${character._id || character.id}">
                 <img class="character-icon" src="../img/${character.attributes.charClass}.png">
@@ -44,7 +43,6 @@ const navDrawerModule = (function() {
         $(".character-list-item").click(function(event) { 
             event.preventDefault();
             state.navDrawerOpen = false;
-            console.log(event);
             const id = $(this).attr("data-id");
             apiModule.getCharacter(id)
                 .then(character => {
@@ -60,22 +58,18 @@ const navDrawerModule = (function() {
     function _logout(state) {
         $('#js-logout-button').click(event => {
             event.preventDefault();
-            console.log("Logout clicked");
             state.currentCharacter = blankCharacter;
             authModule.logOut();
             state.navDrawerOpen = false;
-            state.currentPage = "login";
+            state.currentPage = "landing";
             _render(state)
         });
     }
 
     function _clickNewCharacter(state) {
-        
         $("#js-new-character-button").click(event => {
             event.preventDefault();
-            console.log("New Character clicked");
             state.navDrawerOpen = false;
-            console.log("Nav Drawer should close");
             apiModule.postCharacter({
                 name: commonModule._randomize(randomNames),
                 attributes: {
@@ -109,17 +103,13 @@ const navDrawerModule = (function() {
     function _open(state) {
         state.navDrawerOpen = true;
         _generateCharacterList(state);
-        console.log("opening nav drawer");
         _render(state);
     }
 
     function _close(state) {
         $(".drawer-close-button").click(function(event) {
             event.preventDefault;
-            // state.navDrawerOpen = false;
             $("#js-nav-drawer").addClass("drawer-closed-on-mobile");
-            console.log("closing nav drawer");
-            // _render(state)
         });
     };
 
@@ -176,7 +166,6 @@ const navDrawerModule = (function() {
             </div>
         `;
 
-        // const navDrawer = commonModule.renderLayoutNav(navDrawerContent)
         return navDrawerContent;
 
     }
@@ -186,8 +175,6 @@ const navDrawerModule = (function() {
         _clickNewCharacter(state);
         _openCharacter(state);
         _logout(state);
-        // _deleteCharacter(state);
-    // same as the other module (common)
 }
 
     return {
@@ -198,7 +185,6 @@ const navDrawerModule = (function() {
         _logout,
         _clickNewCharacter,
         _openCharacter,
-        // _deleteCharacter,
         initiate
     }
 

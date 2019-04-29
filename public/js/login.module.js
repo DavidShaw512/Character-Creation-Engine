@@ -11,8 +11,8 @@ const loginModule = (function() {
             event.preventDefault();
             const email = document.getElementById("js-email").value;
             const password = document.getElementById("js-password").value;
-            // const rememberMe = document.getElementById("js-remember-me").value; PASS THIS INTO THE LOGIN FUNCTION
-            apiModule.login(email, password)
+            const rememberMe = document.getElementById("js-remember-me").checked; // PASS THIS INTO THE LOGIN FUNCTION
+            apiModule.login(email, password, rememberMe)
                 .then(response => {
                     console.log(response);
                     // localStorage.setItem("user", response);
@@ -46,10 +46,7 @@ const loginModule = (function() {
             // THIS CODE IS THE OLD WAY OF CHANGING PAGES, WITHOUT THE ROUTER:
             state.currentPage = "signup";
             render(state);
-        })
-        
-        
-        
+        })   
     }
 
     // public
@@ -74,6 +71,7 @@ const loginModule = (function() {
                     <form id="login-form">
                         <input type="email" class="login-field" id="js-email" placeholder="Email"><br>
                         <input type="password" class="login-field" id="js-password" placeholder="Password"><br>
+                        <input type="checkbox" id="js-remember-me" name="RememberMe">Remember me<br>
                         <button class="login-button" id="js-login-button">Login</button>
                     </form>
                     <p class="bad-credentials-message hidden" id="js-bad-credentials-message">

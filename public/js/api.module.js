@@ -43,26 +43,14 @@ const apiModule = (function() {
             .then(response => response.json())
             .then(responseJson => console.log("Success:", JSON.stringify(responseJson)))
             .catch(error => console.log("Error:", error))
-
-        // OLD STUFF:
-        // const data = {
-        //     token: "3456",
-        //     id: "userId" + Math.floor(Math.random() * 1000),
-        //     email,
-        //     password,
-        //     characters: []
-        // }
-        
-        // return new Promise(resolve => {
-        //     resolve(data);
-        // })
     };
 
     function login(email, password, rememberMe) {
         // User logs in, recieves token, store token in auth module (make sure you've got good error handling)
         const userData = {
             email,
-            password
+            password,
+            rememberMe
         }
         const url = `/auth/login`;
         const options = {

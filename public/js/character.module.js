@@ -138,14 +138,22 @@ const characterModule = (function() {
             }
             // DELETE will be similar, but use filter instead of map:
             // .filter(char => char.id !== newCharacter.id)
-            alert("Character Saved!");
             render(state);  
         })
     };
 
-    function _deleteCharacter(state) {
+    function _clickDelete() {
         $("#js-delete-button").click(event => {
+            event.preventDefault();
+            console.log("Clicked delete");
+            $("#js-popup-window").removeClass("hidden");
+        });
+    };
+
+    function _yesDelete(state) {
+        $("#js-yes-delete").click(event => {
             event.preventDefault;
+            $("#js-popup-window").addClass("hidden");
             const listedCharacters = document.getElementsByClassName("character-list-item");
             const doomedCharacter = state.currentCharacter;
             console.log("Character list: ", listedCharacters);
@@ -181,8 +189,15 @@ const characterModule = (function() {
                 id: ""
             };
             render(state);
-        })
-    }
+        });
+    };
+
+    function _noDelete() {
+        $("#js-no-delete").click(function(event) {
+            event.preventDefault();
+            $("#js-popup-window").addClass("hidden");
+        });
+    };
     
 
     // Public
@@ -203,7 +218,16 @@ const characterModule = (function() {
                     <h1 id="js-build-page-header-text"><img src="../img/${headerImage || "d20"}.png" class="build-logo"><br>
                     ${properHeader}</h1>
                 </header>
+                
                 <div class="button-container">
+                    <div class="popup-window hidden" id="js-popup-window">
+                        <div class="delete-popup" id="js-delete-popup">
+                            <p>Are you sure?<br>
+                            <button class="popup-button yes-delete" id="js-yes-delete">Yes</button>
+                            <button class="popup-button no-delete" id="js-no-delete">No</button>
+                            </p>
+                        </div>
+                    </div>
                     <button class="randomize-button build-button" id="js-randomize-button">
                         <span class="fas fa-dice"></span><br>
                         Randomize
@@ -229,7 +253,9 @@ const characterModule = (function() {
         _randomizeCharacter(state);
         _customizeCharacter(state);
         _saveCharacter(state);
-        _deleteCharacter(state);
+        _clickDelete();
+        _yesDelete(state);
+        _noDelete();
         // _toggleNavDrawer();
         // THis is gonna be handled by the
     }

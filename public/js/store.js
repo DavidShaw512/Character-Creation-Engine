@@ -1,5 +1,5 @@
 const STORE = {
-    currentPage: "login",
+    currentPage: "landing",
     currentUser: {
         id: "",
         email: "",

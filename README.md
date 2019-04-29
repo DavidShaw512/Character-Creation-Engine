@@ -7,6 +7,9 @@ CCE is a great jumping-off point for players creating a new character, or dungeo
 
 link
 
+Test account credentials: 
+blerp
+
 ### Screenshots
 
 Title/login screen:

@@ -40,9 +40,6 @@ const signupModule = (function() {
             // THIS CODE IS THE NEW WAY OF CHANGING PAGES, WITH A ROUTER:
             // let rootDiv = document.getElementById('root');
             // rootDiv.innerHTML = routes[window.location.character];
-
-            // THIS CODE IS THE OLD WAY OF CHANGING PAGES, WITHOUT THE ROUTER:
-            
         })
         
         
