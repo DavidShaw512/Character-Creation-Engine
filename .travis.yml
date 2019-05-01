@@ -1,7 +1,7 @@
 language: node_js
 # Be explicit about what version you use:
 node_js: 
-  - "10.15.3"
+  - "11.8.0"
 deploy:
   provider: heroku
   api_key:
