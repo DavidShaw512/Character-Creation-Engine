@@ -114,7 +114,6 @@ const characterModule = (function() {
         $("#js-save-button").click(event => {
             event.preventDefault;
             const newCharacter = state.currentCharacter;
-            console.log("New character: " + newCharacter);
             if (newCharacter.id) {
                 apiModule.putCharacter(newCharacter)
                     .then(response => {
@@ -129,15 +128,12 @@ const characterModule = (function() {
             } else {
                 apiModule.postCharacter(newCharacter)
                     .then(response => {
-                        console.log("Save - Post new character response: ", response);
                         state.currentUser.characters = [...state.currentUser.characters, response];
                         state.currentCharacter = response;
                         render(state);
                     })
 
             }
-            // DELETE will be similar, but use filter instead of map:
-            // .filter(char => char.id !== newCharacter.id)
             render(state);  
         })
     };
@@ -145,7 +141,6 @@ const characterModule = (function() {
     function _clickDelete() {
         $("#js-delete-button").click(event => {
             event.preventDefault();
-            console.log("Clicked delete");
             $("#js-popup-window").removeClass("hidden");
         });
     };
