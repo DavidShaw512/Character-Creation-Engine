@@ -14,7 +14,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp)
 
-describe("Protected character endpoints", function() { // user deletion issue does not happen here
+describe("Protected character endpoints", function() {
     const email = "email@characters.com";
     const password = "password";
 
@@ -24,16 +24,6 @@ describe("Protected character endpoints", function() { // user deletion issue do
         stats: {},
         background: "Default background"
     }
-
-    //FINISH TESTS - MOVE USER.CREATE/DELETE UP TO GLOBAL BEFORE/AFTER FUNCTIONS, AND CHARACTER CREATE/DELETE
-        // TO LOCAL BEFOREEACH/AFTEREACH FUNCTIONS
-    //CLEAN UP CODE
-    //OPEN A HELP TICKET IF NEEDED
-    //START ON A README DOCUMENT, LOOK UP EXAMPLES IN COURSE
-    //LOOK FOR FEEDBACK, USER TESTING
-    //MOVE "NEW CHARACTER" BUTTON ABOVE CHARACTER LIST
-    //MAKE CHARACTER CARDS SMALLER (LOOK AT MATERIAL.IO THING FOR LISTS)
-    //MORE PADDING IN TEXT FIELDS, UNIFORMITY IN SIZE (LOOK AT MATERIAL.IO THING FOR TEXT FIELDS)
 
     before(function() {
         return runServer(TEST_DATABASE_URL)

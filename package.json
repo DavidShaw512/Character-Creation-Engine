@@ -4,7 +4,7 @@
   "description": "DnD character randomizer capstone",
   "main": "server.js",
   "engines": {
-    "node": "10.15.3"
+    "node": "11.8.0"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",

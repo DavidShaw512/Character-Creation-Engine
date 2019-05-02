@@ -13,7 +13,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp)
 
-describe("User signup endpoint", function() {
+describe("User endpoint", function() {
     const email = "email@email.com";
     const password = "password";
     const email2 = "email2@email2.com";

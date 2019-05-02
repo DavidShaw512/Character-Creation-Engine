@@ -176,10 +176,3 @@ const apiModule = (function() {
         deleteCharacter
     };
 })();
-
-// Nav Drawer new character button will POST a new character (and close the drawer)
-// clicking on an existing character will close the drawer
-// PUT character will be hooked up to save button
-// DELETE character will be in the little tabs in the nav drawer (maybe a trash can button)
-// Try making a "are you sure?" thing that pops up before deletion (maybe an absolutely positioned Div)
-// Write tests for your endpoints as you go

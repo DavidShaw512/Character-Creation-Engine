@@ -18,6 +18,7 @@ describe("Auth endpoints", function() {
     const password = "samplepassword"
 
     before(function() {
+        console.log(TEST_DATABASE_URL);
         return runServer(TEST_DATABASE_URL);
     });
 
@@ -82,7 +83,7 @@ describe("Auth endpoints", function() {
     //ABOVE: USER SIGNUP ENDPOINT TESTS
     //BELOW: USER LOGIN ENDPOINT TESTS
 
-    describe("/auth/login", function() { // USER DELETION ISSUE HAPPENS IN HERE !!!!!!!!!!!!!!!!!!!!!!!
+    describe("/auth/login", function() {
 
         beforeEach(function(done) {
             User.hashPassword(password).then(password => {

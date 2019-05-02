@@ -11,8 +11,29 @@ Test account credentials:
 email: test@test.com
 pass: tester
 
+
+### Dependencies
+
+- bcrypt
+- bcryptjs
+- body-parser
+- dotenv
+- express
+- jsonwebtoken
+- mongoose
+- morgan
+- nodemon
+- passport
+- passport-jwt
+- passport-local
+
+### Dev Dependencies
+
+- chai
+- chai-http
+- mocha
+
 Include: 
-Dependencies section
 How to get the app up and running if it gets pulled down (install node, run npm start, )
 Testing section (commands to run to test the app)
 
@@ -20,7 +41,11 @@ To find out: clone app into new directory, go through all steps to get it runnin
 
 ### Screenshots
 
-Title/login screen:
+Title/Landing screen:
+
+![Landing page](......)
+
+Login screen:
 
 ![Login page](public/img/screenshots/Login.png)
 
