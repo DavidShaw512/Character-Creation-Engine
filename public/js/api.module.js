@@ -1,6 +1,3 @@
-// This is where the API for the app will be defined, obviously
-
-
 const apiModule = (function() {
 
     const { 
@@ -13,16 +10,7 @@ const apiModule = (function() {
 
 
     function getUser() {
-
-        // Old stuff:
-        // return new Promise(resolve => {
-        //     const data = {
-        //         email: "api@api.com",
-        //         password: "",
-        //         id: ""
-        //     };
-        //     resolve(data);
-        // });
+        
     };
 
     function signup(email, password) {
@@ -60,7 +48,6 @@ const apiModule = (function() {
         return request(url, options)
             .then(response => response.json())
             .then(responseJson => {
-                console.log("Logging in...", responseJson.user);
                 storeToken(responseJson.authToken);
                 storeUser(responseJson.user);
                 return responseJson.user;
@@ -101,24 +88,10 @@ const apiModule = (function() {
 
         return request(url, options)
             .then(response => {
-                console.log(response);
                 return response.json();
             })
-            .then(jsonCharacters => console.log(jsonCharacters))
+            // .then(jsonCharacters => console.log(jsonCharacters))
             .catch(error => console.log("Error!", error));
-        // return new Promise(resolve => {
-        //     const data = [
-        //         {
-        //             name: "",
-        //             attributes: {
-        //                 race: "",
-        //                 charClass: "",
-        //             },
-        //             id: ""
-        //         },
-        //     ];
-        //     resolve(data);
-        // })
     }
 
     function postCharacter(character) {
@@ -131,7 +104,6 @@ const apiModule = (function() {
         return request(url, options)
             .then(response => response.json())
             .then(responseJson => {
-                console.log("Blank character posted ", responseJson);
                 return responseJson;
             })
             .catch(err => console.log(err));
@@ -147,9 +119,9 @@ const apiModule = (function() {
         return request(url, options)
             .then(response => response.json())
             .then(responseJson => {
-                console.log("Character updated", responseJson);
-
+                // console.log("Character updated", responseJson);
             })
+            .catch(err => console.log(err));
     };
 
     function deleteCharacter(characterId) {
@@ -160,7 +132,6 @@ const apiModule = (function() {
 
         return request(url, options)
             .then(response => response.json())
-            .then(responseJson => console.log("Delete Success!", responseJson))
             .catch(error => console.log("Error!", error));
     };
 

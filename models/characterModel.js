@@ -60,8 +60,6 @@ CharacterSchema.methods.serialize = function() {
 CharacterSchema.post('save', (doc, next) => {
     User.find(doc.user)
         .then(user => {
-            console.log(user);
-            console.log(user[0]);
             user[0].characters.push(doc);
             user[0].save();
         })

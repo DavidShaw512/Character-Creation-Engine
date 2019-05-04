@@ -38,7 +38,7 @@ describe("User endpoint", function() {
             .catch(done);
     });
 
-    describe("/api/users", function() { // user deletion issue does not happen here
+    describe("/api/users", function() {
         it("Should reject users request with no credentials", function() {
             return chai.request(app)
                 .get("/api/users")

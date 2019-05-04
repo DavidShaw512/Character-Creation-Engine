@@ -13,12 +13,6 @@ const createAuthToken = function(user, rememberMe) {
     });
 };
 
-// The user provides an email and password to login
-// exports.userLogin = (req, res) => {
-//   const authToken = createAuthToken(req.user.serialize());
-//   res.json({authToken});
-// };
-
 // The user exchanges a valid JWT for a new one with a later expiration
 exports.refreshToken = (req, res) => {
   const authToken = createAuthToken(req.user);
@@ -91,12 +85,6 @@ exports.newUserSignup = (req, res, next) => {
     };
 
     let {email, password} = req.body
-
-    // const user = new User({
-    //     email,
-    //     password: bcrypt.hash(password, 10)
-    // });
-    // console.log(user);
 
     // Then look to see if the email is already taken
     User.findOne({email})

@@ -50,10 +50,9 @@ describe("Auth endpoints", function() {
             return chai.request(app)
                 .post("/auth/signup")
                 .then(res => {
-                    console.log("-----Auth signup test response body: ", res.body);
                     expect(res).to.have.status(422);
                     // expect(res.body.reason).to.equal("Validation error");
-                    // expect(res.body.message).to.equal("Signup requires email and password")
+                    expect(res.body.error.message).to.equal("Signup requires email and password")
                 })
                 // .catch(err => {
                 //     console.log("Signup test error: ", err)
@@ -73,7 +72,6 @@ describe("Auth endpoints", function() {
                     password
                 })
                 .then(res => {
-                    console.log("----- Auth signup create user test res.body: ", res.body);
                     expect(res).to.have.status(201);
                 })
         })
@@ -153,7 +151,6 @@ describe("Auth endpoints", function() {
                 .then(res => {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.a('object');
-                    // console.log("-----Auth login test res.body: ", res.body)
                     const token = res.body.authToken;
                     expect(token).to.be.a('string');
                     const payload = jwt.verify(token, JWT_SECRET, {

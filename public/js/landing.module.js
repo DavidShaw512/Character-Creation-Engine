@@ -8,7 +8,6 @@ const landingModule = (function() {
     function _goToLogin(state) {
         $('#js-landing-login-button').click(function(event) {
             event.preventDefault();
-            console.log("Login button clicked");
             state.currentPage = 'login';
             render(state)
         });
@@ -17,7 +16,6 @@ const landingModule = (function() {
     function _goToSignup(state) {
         $('#js-landing-signup-button').click(function(event) {
             event.preventDefault();
-            console.log("Signupt button clicked");
             state.currentPage = 'signup';
             render(state)
         });

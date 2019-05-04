@@ -122,7 +122,6 @@ describe("Protected character endpoints", function() {
                 .set("authorization", `Bearer ${token}`)
                 .then(res => {
                     expect(res).to.have.status(200);
-                    console.log(res.body);
                     expect(res.body.characters).to.be.a("Array");
                     // expect(res.body.characters).to.have.lengthOf(1);
                 })

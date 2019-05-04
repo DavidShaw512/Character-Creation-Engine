@@ -85,12 +85,6 @@ const commonModule = (function() {
         const quirk = document.getElementById("input-quirk");
         const background = document.getElementById("input-background");
 
-        // name.value = _randomize(randomNames);
-        // race.value = _randomize(randomRaces);
-        // charClass.value = _randomize(randomClasses);
-        // accent.value = _randomize(randomVoices);
-        // quirk.value = _randomize(randomQuirks);
-        // mar 6 comment
         state.currentCharacter.name = _randomize(randomNames);
         state.currentCharacter.attributes.race = _randomize(randomRaces);
         state.currentCharacter.attributes.charClass = _randomize(randomClasses);
@@ -118,7 +112,6 @@ const commonModule = (function() {
         statFields.WIS = _randomizeStatNumber();
         statFields.CHA = _randomizeStatNumber();
         statFields.INT = _randomizeStatNumber();
-        console.log(statFields);
     }
 
     function randomizeCharacter(state) {

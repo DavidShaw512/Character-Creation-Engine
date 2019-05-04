@@ -97,7 +97,6 @@ const characterModule = (function() {
     function _customizeCharacter(state) {
         $("input, textarea").change(function() {
             const path = $(this).attr("data-state").split(".");
-            console.log("Customize character function - this: ", this);
             if (path.length === 1) {
                 state.currentCharacter[path[0]] = $(this).val();
             } else {
@@ -117,7 +116,6 @@ const characterModule = (function() {
             if (newCharacter.id) {
                 apiModule.putCharacter(newCharacter)
                     .then(response => {
-                        console.log(response);
                         state.currentUser.characters = state.currentUser.characters.map(char => {
                             return (char.id || char._id) === newCharacter.id ? {...char, ...newCharacter} : char
                         })
@@ -149,14 +147,9 @@ const characterModule = (function() {
         $("#js-yes-delete").click(event => {
             event.preventDefault;
             $("#js-popup-window").addClass("hidden");
-            const listedCharacters = document.getElementsByClassName("character-list-item");
             const doomedCharacter = state.currentCharacter;
-            console.log("Character list: ", listedCharacters);
-            console.log("First characters data: ", listedCharacters[0].dataset.id);
-            console.log("Character to be deleted: " + doomedCharacter.id);
             apiModule.deleteCharacter(doomedCharacter.id)
                 .then(response => {
-                    console.log("Response from apiModule.deleteCharacter: " + response);
                     // state.currentCharacter = blankCharacter;
                     // render(state);
                     

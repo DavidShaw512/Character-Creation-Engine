@@ -4,7 +4,6 @@ function render(currentState) {
     // check in the store, if token is there redirect to character page
     switch(currentState.currentPage) {
         case "landing":
-            console.log("Rendering landing page");
             // use auth module to get token
             const token = authModule.getToken();
             if (token) {
@@ -24,16 +23,13 @@ function render(currentState) {
             }
             break;
         case "login":
-            console.log("Rendering login page");
             loginModule.render(currentState);
             break;
         case "signup":
-            console.log("Rendering signup page");
             signupModule.render(currentState);
             break;
         case "character":
             characterModule.render(currentState);
-            console.log("Rendering character build page");
             break;
     };
 }
@@ -50,5 +46,3 @@ $(function() {
     main();
     console.log("App loaded");
 })
-
-// Go one page at a time, get things rendering

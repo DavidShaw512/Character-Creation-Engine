@@ -22,7 +22,6 @@ const signupModule = (function() {
             event.preventDefault();
             const newEmail = document.getElementById("js-signup-email").value;
             const newPassword = document.getElementById("js-signup-password").value;
-            console.log(newEmail);
             apiModule.signup(newEmail, newPassword)
                 .then(() => {
                     state.currentPage = "login";

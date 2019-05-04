@@ -11,26 +11,19 @@ const loginModule = (function() {
             event.preventDefault();
             const email = document.getElementById("js-email").value;
             const password = document.getElementById("js-password").value;
-            const rememberMe = document.getElementById("js-remember-me").checked; // PASS THIS INTO THE LOGIN FUNCTION
+            const rememberMe = document.getElementById("js-remember-me").checked;
             apiModule.login(email, password, rememberMe)
                 .then(response => {
-                    console.log(response);
                     // localStorage.setItem("user", response);
                     state.currentUser = response // make sure it's actually returning the user so this makes sense;
                     state.currentPage = "character";
-                    console.log(STORE);
                     render(state);
-                    // Make a 'remember me' option
                 })
                 .catch(err => {
                     console.log("Error: " + err);
                     state.currentPage = "login";
                     render(state);
                     $("#js-bad-credentials-message").removeClass("hidden");
-
-                    // Handle authentication errors here
-                    // Put a loading spinner in case it's laggy, turns on in transit
-                    // and turns off on success/error
                 })
         })
     }
