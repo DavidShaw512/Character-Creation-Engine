@@ -11,4 +11,4 @@ deploy:
   app: obscure-woodland-38845
   on:
     repo: DavidShaw512/Capstone-dnd-character-randomizer
-    branch: DevBranch
+    branch: master
