@@ -1,0 +1,14 @@
+language: node_js
+# Be explicit about what version you use:
+node_js: 
+  - "11.8.0"
+services: 
+  - mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: mUsyy1x5P/fgvzruLvBnVsrf062f91TjTDStutkidCwDjJxD18mGV2Scg1U9PAPrDL3PJVvVk55X2/PV01mjTSL1N3TJjT6rjrjsoXEguZ2cvx7o+US8DbMeZ6SP48R3+WY0+hHYIVJnW9Va2pyqEHV6tPFS8mfPduMzRvv+G/Cnb8yeKVjiIvWGO7F9JzXAnXgyqm9+FRCdSWLrGolVnOih6xzMVf1PkVGAiQMwzi3VOSW/kG8c57BLHrduRgIICOHXY5goNGHbVa1mka6M2UmydujuAuYPUw6hsayYnlucs00OvRJZUz++/7v2a45BWZTI8GJtLPscGWdVhRNb7xuJuPLG/NT+V4elR+Spg/v+v7vcMRBaeVV5y8fMPf6RN9D2PVo59CRwHsXbDl426fL/mK1jtP8kWNRYp/kMkH8q/eovwsT6gxFnhnugqM3xW3FAcijGkcSN2g9mxTLAkGFxWC2gICDAZ6A3U1Jpfo/VxCkWSoeZrd2zRFmb/9TcGU7Orb2ToQbXYcuIK07J7RskXEbbdQPbLzENwXe53WkpP7NF4MZXqxBW5a+zlS6TyGmyvRkRbwjc+S7cvuFlK9SeezrPLtUCkzSlUomYUld1+pXieK2TwhvH+M1wNF5V4CxMg98KGNRSLd+m3FshdG1QO5CZR1FegS98nQHb9kY=
+  app: obscure-woodland-38845
+  on:
+    repo: DavidShaw512/Capstone-dnd-character-randomizer
+    branch: DevBranch
