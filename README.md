@@ -1,3 +1,5 @@
+![Build status](https://travis-ci.org/DavidShaw512/Capstone-dnd-character-randomizer.svg?branch=master) 
+
 # Charcter Creation Engine
 ## for DnD 5e
 
