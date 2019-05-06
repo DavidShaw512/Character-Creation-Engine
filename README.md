@@ -7,7 +7,7 @@ CCE is a great jumping-off point for players creating a new character, or dungeo
 
 ### Live demo:
 
-link
+- [Link to live app](https://obscure-woodland-38845.herokuapp.com/)
 
 Test account credentials: 
 email: test@test.com
@@ -45,7 +45,7 @@ To find out: clone app into new directory, go through all steps to get it runnin
 
 Title/Landing screen:
 
-![Landing page](......)
+![Landing page](public/img/screenshots/Landing-page.png)
 
 Login screen:
 
