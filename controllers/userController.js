@@ -51,6 +51,7 @@ exports.getCurrentUser = (req, res) => {
             res.status(200).json(user.serialize());
         } else {
             res.status(404);
+            
         }
         
       })

@@ -158,7 +158,7 @@ const navDrawerModule = (function() {
                         <li class="character-list-item" id="js-new-character-button">
                             <img class="character-icon" src="../img/d20.png">
                             <span class="new-character">New Character</span><br> 
-                            <span class="character-description"> Make a new character!</span>
+                            <span class="character-description">Roll a random character!</span>
                         </li>
                         ${characterList}
                     </ul>

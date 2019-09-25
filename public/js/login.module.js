@@ -61,6 +61,9 @@ const loginModule = (function() {
                 </header>
                 <div class="login-box" role="section">
                     <p class="new-user-message hidden" id="js-new-user-message">Now log in with your new credentials!</p>
+                    <p>Demo login credentials:<br/>
+                    test@test.com<br/>
+                    tester</p>
                     <form id="login-form">
                         <input type="email" class="login-field" id="js-email" placeholder="Email"><br>
                         <input type="password" class="login-field" id="js-password" placeholder="Password"><br>
