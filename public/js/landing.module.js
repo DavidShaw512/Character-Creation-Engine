@@ -41,6 +41,10 @@ const landingModule = (function() {
                         </h1>
                 </header>
                 <div class="login-box" role="section">
+                    <p>Quickly randomize DnD 5e characters, or customize them to make them your own!</p>
+                    <p>Demo login credentials:<br/>
+                    test@test.com<br/>
+                    tester</p>
                     <button class="landing-button landing-login-button" id="js-landing-login-button">Login</button><br>
                     <button class="landing-button landing-signup-button" id="js-landing-signup-button">Signup</button>
                 </div>

@@ -7,8 +7,6 @@ const apiModule = (function() {
         request
     } = authModule;
 
-
-
     function getUser() {
         
     };
@@ -63,6 +61,7 @@ const apiModule = (function() {
 
         return request(url, options)
             .then(response => response.json())
+            .catch(error => console.log("Error:", error));
     }
 
     function getCharacter(id) {

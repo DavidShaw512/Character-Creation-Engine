@@ -13,8 +13,6 @@ const { jwtStrategy, localStrategy } = require('./util/authStrategies');
 
 const app = express();
 
-// passport.use(localStrategy);
-
 mongoose.connect(DATABASE_URL, { useNewUrlParser: true });
 
 app.use(morgan("dev"));
