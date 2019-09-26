@@ -61,7 +61,11 @@ const apiModule = (function() {
 
         return request(url, options)
             .then(response => response.json())
-            .catch(error => console.log("Error:", error));
+            .catch(error => {
+                console.log("Error:", error);
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+            });
     }
 
     function getCharacter(id) {
