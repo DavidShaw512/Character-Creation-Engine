@@ -78,7 +78,7 @@ const characterModule = (function() {
                         INT
                     </div> 
                 </div>
-                <label for="input-background" class="input-label">Background</label><br>
+                <label for="input-background" class="input-label">Why be an adventurer?</label><br>
                 <textarea data-state="background" class="character-background-box build-input" id="input-background">${state.currentCharacter.background}</textarea>
             </p>
         </form>
